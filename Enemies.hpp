@@ -7,6 +7,7 @@ class Enemies
     public:
         Enemies();
         ~Enemies();
+        virtual render(SDL_Renderer*)
         virtual void move();
         virtual bool check_death();
 };
