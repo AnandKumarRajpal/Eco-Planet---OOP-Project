@@ -3,11 +3,12 @@
 #include "string.h"
 #include <iostream>
 
-class StartScreen : public Screens
+class IntroScreen : public Screens
 {
 public:
-    StartScreen(SDL_Texture *, SDL_Texture *);
-    ~StartScreen();
+    IntroScreen(SDL_Texture *, SDL_Texture *);
+    ~IntroScreen();
     void Update();
     //void Render();
 };
+#include "IntroScreen.hpp"

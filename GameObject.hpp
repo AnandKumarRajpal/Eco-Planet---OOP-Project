@@ -4,14 +4,12 @@
 
 class GameObject
 {
-protected:
-    int xpos, ypos, height;
+    int xpos, ypos, height, width;
     SDL_Point position;
     SDL_Texture *objTexture;
     SDL_Rect srcRect, destRect;
 
 public:
-    int width;
     GameObject();
     GameObject(SDL_Texture *, int, int, int, int, float, int, int);
     //~GameObject();

@@ -14,34 +14,3 @@ GameOverScreen::GameOverScreen(SDL_Texture *tex, SDL_Texture *buttontex) : Scree
     std::cout << "Game Over Screen constructor called" << std::endl;
 }
 void GameOverScreen::Update() {}
-void GameOverScreen::handleEvents(SDL_Event *e)
-{
-    for (int i = 0; i < totalButtons; ++i)
-    {
-        btns[i]->handleEvents(e);
-        if (btns[i]->inside == true)
-        {
-            if (btns[i] == btns[PLAYAGAIN])
-            {
-                switch (e->type)
-                {
-                    // case SDL_MOUSEMOTION:
-                    //     mCurrentSprite = BUTTON_SPRITE_MOUSE_OVER_MOTION;
-                    //     break;
-
-                    // case SDL_MOUSEBUTTONDOWN:
-
-                    //     break;
-
-                case SDL_MOUSEBUTTONUP:
-                    std::cout << "Main Screen Load" << std::endl;
-                    break;
-                }
-            }
-            else if (btns[i] == btns[QUIT])
-            {
-                SDL_Quit();
-            }
-        }
-    }
-}

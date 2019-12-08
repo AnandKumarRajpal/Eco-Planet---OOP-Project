@@ -12,7 +12,6 @@ public:
     MainScreen(SDL_Texture *);
     ~MainScreen();
     void Update();
-    void handleEvents(SDL_Event *e);
 
     //bool onMainScreen = false;
 };

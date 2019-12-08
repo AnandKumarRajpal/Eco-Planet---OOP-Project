@@ -10,5 +10,4 @@ public:
     //~GameOverScreen();
     void Update();
     //void Render();
-    void handleEvents(SDL_Event *e);
 };

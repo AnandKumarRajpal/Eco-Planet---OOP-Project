@@ -9,7 +9,6 @@ class Button
 protected:
     //Top left position of button
     SDL_Point position;
-
     int width;
     int height;
 
@@ -21,5 +20,6 @@ public:
     Button(int xstart, int ystart, int xend, int yend, int w, int h);
     ~Button();
     void Render(SDL_Texture *);
+    bool isOverMouse(int, int);
     void handleEvents(SDL_Event *);
 };

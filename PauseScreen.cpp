@@ -18,38 +18,4 @@ PauseScreen::PauseScreen(SDL_Texture *tex, SDL_Texture *buttontex) : Screens(tex
 }
 void PauseScreen::Update() {}
 
-void PauseScreen::handleEvents(SDL_Event *e)
-{
-    for (int i = 0; i < totalButtons; ++i)
-    {
-        btns[i]->handleEvents(e);
-        if (btns[i]->inside == true)
-        {
-            if (btns[i] == btns[RESUME])
-            {
-                switch (e->type)
-                {
-                    // case SDL_MOUSEMOTION:
-                    //     mCurrentSprite = BUTTON_SPRITE_MOUSE_OVER_MOTION;
-                    //     break;
-
-                    // case SDL_MOUSEBUTTONDOWN:
-
-                    //     break;
-
-                case SDL_MOUSEBUTTONUP:
-                    std::cout << "Main Screen reLoad" << std::endl;
-                    break;
-                }
-            }
-            // else if (btns[i]==btns[OPTIONS]){
-
-            // }
-            else if (btns[i] == btns[QUIT])
-            {
-                SDL_Quit();
-            }
-        }
-    }
-}
 PauseScreen::~PauseScreen() {}

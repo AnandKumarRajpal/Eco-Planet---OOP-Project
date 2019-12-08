@@ -7,12 +7,6 @@ Life::Life(SDL_Texture *textureSheet, int xstart, int ystart, int xend, int yend
 }
 void Life::Update()
 {
-    // // if (w.x < 0 || destRect.y < 0)
-    // // {
-    // //     destRect.x = 900;
-    // //     destRect.y = 900;
-    // // }
-    // srcRect.w = srcRect.w - 30;
-    // //width = width - 30;
-    // this->Render();
+    destRect.w = destRect.w - 2;
+    this->Render();
 }

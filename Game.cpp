@@ -11,6 +11,10 @@
 #include "Smoke.hpp"
 #include "Fire.hpp"
 #include "Earth.hpp"
+#include "Enemies.hpp"
+#include "Deforestation.hpp"
+#include "IntensiveFarming.hpp"
+#include "FosilFuels.hpp"
 
 SDL_Renderer *Game::renderer = nullptr;
 
@@ -58,13 +62,24 @@ void Game::init()
     life = new Life *[2];
     life[0] = new Life(objectstex, 10, 10, 550, 10, 0.5, 490, 100); //0.5
     life[1] = new Life(objectstex, 16, 117, 564, 24, 0.5, 437, 46); //change width according to life (changing 437 changed the width)
-    earth = new Earth(objectstex, 580, 20, 800, 0, 1, 170, 170);
+    //rec = {564, 24, 437, 46};
+    earth = new Earth(objectstex, 580, 20, 800, 0, 0.5, 170, 170);
     pollutedObj = new GameObject *[3];
     pollutedObj[0] = new Tree(deadTree, 0, 0, 250, 350, 0.5, 91, 174); //0.5
-    pollutedObj[1] = new Tree(deadTree, 90, 30, 600, 365, 1, 80, 145);
+    pollutedObj[1] = new Tree(deadTree, 90, 30, 600, 365, 0.5, 80, 145);
     //pollutedObj[3] = new Trash(objectstex, );
     //pollutedObj[3] = new Fire(fire, 0, 0, 350, 380, 0.2, 940, 280);    //0.2
-    cleanObj = new GameObject *[1];
+    cleanObj = new GameObject *[6];
+    cleanObj[0] = new Tree(cleantree, 0, 83, 250, 390, 1, 110, 61);
+    cleanObj[1] = new Tree(cleantree, 157, 127, 450, 390, 1, 35, 50);
+    cleanObj[2] = new Tree(cleantree, 130, 280, 560, 380, 1, 60, 70);
+    cleanObj[3] = new Tree(cleantree, 317, 426, 100, 408, 1, 20, 38);
+    cleanObj[4] = new Tree(cleantree, 317, 426, 125, 408, 1, 20, 38);
+    cleanObj[5] = new Tree(cleantree, 317, 426, 780, 410, 1, 20, 38);
+    enemy_list = new Enemies *[3];
+    enemy_list[0] = new Deforestation(deforesttex, NULL);
+    enemy_list[1] = new IntensiveFarming(intensivefarmingtex, NULL);
+    enemy_list[2] = new FossilFuel(fossilfueltex, NULL);
 }
 
 void Game::LoadMedia()
@@ -114,20 +129,99 @@ void Game::LoadMedia()
     {
         std::cout << "Fire texture not loaded" << std::endl;
     }
-    cleantree = Texture::loadTexture("spirit/trees.pg");
+    cleantree = Texture::loadTexture("sprites/trees.png");
     if (cleantree == NULL)
     {
         std::cout << "Trees texture not loaded" << std::endl;
+    }
+    deforesttex = Texture::loadTexture("sprites/enemy1.png");
+    if (deforesttex == NULL)
+    {
+        std::cout << "Deforestation texture not loaded" << std::endl;
+    }
+    intensivefarmingtex = Texture::loadTexture("sprites/enemy2.png");
+    if (intensivefarmingtex == NULL)
+    {
+        std::cout << "Intensive Farming texture not loaded" << std::endl;
+    }
+    fossilfueltex = Texture::loadTexture("sprites/enemy3.png");
+    if (fossilfueltex == NULL)
+    {
+        std::cout << "Fossil fuels texture not loaded" << std::endl;
     }
 }
 
 void Game::handleEvents()
 {
-
-    SDL_Event event;
-    startscreen->handleEvents(&event);
+    SDL_Event e;
+    while (SDL_PollEvent(&e) != 0)
+    {
+        if (e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
+        {
+            // Get mouse position
+            int x, y;
+            SDL_GetMouseState(&x, &y);
+            for (int i = 0; i < currentScreen->totalButtons; i++)
+            {
+                if (currentScreen->btns[i]->isOverMouse(x, y))
+                {
+                    if (currentScreen == startscreen)
+                    {
+                        if (e.type == SDL_MOUSEBUTTONDOWN)
+                        {
+                            if (i == 0) //startgame
+                            {
+                                currentScreen = mainscreen;
+                            }
+                            else if (i == 1)
+                            {
+                                currentScreen = startscreen;
+                            }
+                            else if (i == 2) //quit
+                            {
+                                isRunning = false;
+                            }
+                        }
+                    }
+                    else if (currentScreen == pausescreen)
+                    {
+                        if (e.type == SDL_MOUSEBUTTONDOWN)
+                        {
+                            if (i == 0) //options
+                            {
+                            }
+                            else if (i == 1) //resume
+                            {
+                                //currentScreen = mainscreen;
+                            }
+                            else if (i == 2) //quit
+                            {
+                                isRunning = false;
+                            }
+                            else if (i == 3) //sound
+                            {
+                            }
+                        }
+                    }
+                    else if (currentScreen == gameoverscreen)
+                    {
+                        if (e.type == SDL_MOUSEBUTTONDOWN)
+                        {
+                            if (i == 0) //quit
+                            {
+                                isRunning = false;
+                            }
+                            else if (i == 1) //playagain
+                            {
+                                currentScreen = mainscreen;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
-
 void Game::Update()
 {
     //button.Update();
@@ -141,26 +235,32 @@ void Game::Render()
     if (currentScreen == mainscreen)
     {
         mainscreen->Update();
-        for (int i = 0; i < 2; i++)
+        enemy_list[0]->Render(); //abhi bhi thora ajeeeb sa hora hai /kya hua?
+        if (isPolluted)
         {
-            //pollutedObj[i]->Update();
-            pollutedObj[i]->Render();
+            for (int i = 0; i < 2; i++)
+            {
+                //pollutedObj[i]->Update();
+                pollutedObj[i]->Render();
+            }
+        }
+        else
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                cleanObj[i]->Render();
+            }
         }
         for (int i = 0; i < 2; i++)
         {
-
             life[i]->Render();
         }
-        // cleanObj[0] = new Tree();
-        // for (int i = 0; i < 3; i++)
-        // {
-        //     cleanObj[i]->Render();
-        // }
         earth->Render();
     }
     else
     {
         currentScreen->Render();
+        enemy_list[0]->Render();
     }
     //update screen
     SDL_RenderPresent(renderer);
@@ -168,7 +268,8 @@ void Game::Render()
 
 void Game::gameLoop()
 {
-    currentScreen = mainscreen;
+    currentScreen = startscreen;
+    isPolluted = true;
     while (isRunning)
     {
         Render();
@@ -191,4 +292,21 @@ Game::~Game()
     delete startscreen;
     delete gameoverscreen;
     delete pausescreen;
+    delete earth;
+
+    for (int i = 0; i < 2; i++)
+    {
+        delete[] life[i];
+    }
+    for (int i = 0; i < 3; i++)
+    {
+        delete[] pollutedObj[3];
+    }
+    for (int i = 0; i < 6; i++)
+    {
+        delete[] cleanObj[i];
+    }
+    delete[] life;
+    delete[] pollutedObj;
+    delete[] cleanObj;
 }

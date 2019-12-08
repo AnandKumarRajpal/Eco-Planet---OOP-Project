@@ -14,7 +14,4 @@ void MainScreen::Update()
     this->Render(scrollingOffset + 900, 0, 900, 500);
     scrollingOffset--;
 }
-void MainScreen::handleEvents(SDL_Event *e)
-{
-}
 MainScreen::~MainScreen() {}

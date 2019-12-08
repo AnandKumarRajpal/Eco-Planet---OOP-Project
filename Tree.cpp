@@ -7,4 +7,11 @@ Tree::Tree(SDL_Texture *textureSheet, int xstart, int ystart, int xend, int yend
 }
 void Tree::Update()
 {
+    if (destRect.x < 0 || destRect.y < 0)
+    {
+        destRect.x = 900;
+        destRect.y = 900;
+    }
+    destRect.w--;
+    this->Render();
 }

@@ -20,11 +20,12 @@ class Life;
 class Smoke;
 class Tree;
 class Fire;
+class Enemies;
 
 class Game
 {
     SDL_Window *window = NULL;
-    bool isRunning;
+    bool isPolluted, isRunning;
 
     MainScreen *mainscreen = NULL;
     StartScreen *startscreen = NULL;
@@ -35,6 +36,8 @@ class Game
     GameObject **pollutedObj = NULL;
     GameObject **cleanObj = NULL;
     Screens *currentScreen = NULL;
+    Enemies **enemy_list = NULL;
+    Enemies *current_enemy = NULL;
 
     SDL_Texture *starttex = NULL;
     SDL_Texture *maintex = NULL;
@@ -46,7 +49,9 @@ class Game
     SDL_Texture *smoke = NULL;
     SDL_Texture *cleantree = NULL;
     SDL_Texture *objectstex = NULL;
-
+    SDL_Texture *deforesttex = NULL;
+    SDL_Texture *intensivefarmingtex = NULL;
+    SDL_Texture *fossilfueltex = NULL;
     // int scrollingOffset = 0;
 
 public:
