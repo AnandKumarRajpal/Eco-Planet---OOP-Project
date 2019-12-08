@@ -13,7 +13,6 @@ protected:
     int height;
 
 public:
-    //Check if mouse is in button
     bool inside;
     SDL_Rect srcRect, destRect;
     Button();

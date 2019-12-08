@@ -3,9 +3,6 @@
 #include <SDL_image.h>
 #include <iostream>
 #include <string.h>
-//#include "MainScreen.hpp"
-//#include "Texture.hpp"
-//#include "Button.hpp"
 
 class Screens;
 class MainScreen;
@@ -13,14 +10,11 @@ class StartScreen;
 class GameOverScreen;
 class PauseScreen;
 class Texture;
-class Button;
 class GameObject;
 class Earth;
 class Life;
-class Smoke;
-class Tree;
-class Fire;
 class Enemies;
+class Player;
 
 class Game
 {
@@ -38,6 +32,9 @@ class Game
     Screens *currentScreen = NULL;
     Enemies **enemy_list = NULL;
     Enemies *current_enemy = NULL;
+    Player *player = NULL;
+    GameObject **ecoFriendly = NULL;
+    GameObject **nonecoFriendly = NULL;
 
     SDL_Texture *starttex = NULL;
     SDL_Texture *maintex = NULL;
@@ -52,6 +49,7 @@ class Game
     SDL_Texture *deforesttex = NULL;
     SDL_Texture *intensivefarmingtex = NULL;
     SDL_Texture *fossilfueltex = NULL;
+    SDL_Texture *playertex = NULL;
     // int scrollingOffset = 0;
 
 public:

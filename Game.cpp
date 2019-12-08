@@ -1,6 +1,5 @@
 #include "Game.hpp"
 #include "Texture.hpp"
-#include "Button.hpp"
 #include "MainScreen.hpp"
 #include "GameOverScreen.hpp"
 #include "PauseScreen.hpp"
@@ -15,6 +14,9 @@
 #include "Deforestation.hpp"
 #include "IntensiveFarming.hpp"
 #include "FosilFuels.hpp"
+#include "Character.hpp"
+#include "Player.hpp"
+#include "RandomObj.hpp"
 
 SDL_Renderer *Game::renderer = nullptr;
 
@@ -80,10 +82,34 @@ void Game::init()
     enemy_list[0] = new Deforestation(deforesttex, NULL);
     enemy_list[1] = new IntensiveFarming(intensivefarmingtex, NULL);
     enemy_list[2] = new FossilFuel(fossilfueltex, NULL);
+    player = new Player(playertex);
+    ecoFriendly = new GameObject *[8];
+    nonecoFriendly = new GameObject *[8];
+    ecoFriendly[0] = new RandomObj(objectstex, 29, 250, 250, 390, 0.5, 200, 150);
+    ecoFriendly[1] = new RandomObj(objectstex, 260, 220, 350, 390, 0.5, 170, 174);
+    // ecoFriendly[2] = new RandomObj(objectstex, );
+    // ecoFriendly[3] = new RandomObj(objectstex, );
+    // ecoFriendly[4] = new RandomObj(objectstex, );
+    // ecoFriendly[5] = new RandomObj(objectstex, );
+    // ecoFriendly[6] = new RandomObj(objectstex, );
+    // ecoFriendly[7] = new RandomObj(objectstex, );
+    // nonecoFriendly[0] = new RandomObj(objectstex, );
+    // nonecoFriendly[1] = new RandomObj(objectstex, );
+    // nonecoFriendly[2] = new RandomObj(objectstex, );
+    // nonecoFriendly[3] = new RandomObj(objectstex, );
+    // nonecoFriendly[4] = new RandomObj(objectstex, );
+    // nonecoFriendly[5] = new RandomObj(objectstex, );
+    // nonecoFriendly[6] = new RandomObj(objectstex, );
+    // nonecoFriendly[7] = new RandomObj(objectstex, );
 }
 
 void Game::LoadMedia()
 {
+    playertex = Texture::loadTexture("sprites/player.png");
+    if (playertex == NULL)
+    {
+        std::cout << "Player texture not loaded" << std::endl;
+    }
     buttontex = Texture::loadTexture("buttons.png");
     if (buttontex == NULL)
     {
@@ -156,6 +182,36 @@ void Game::handleEvents()
     SDL_Event e;
     while (SDL_PollEvent(&e) != 0)
     {
+        switch (e.type)
+        {
+        case SDL_QUIT:
+            isRunning = false;
+            break;
+        case SDL_KEYDOWN:
+
+            switch (e.key.keysym.sym)
+            {
+            case SDLK_UP:
+                player->set_direction("UP");
+                break;
+            case SDLK_LEFT:
+                player->set_direction("left");
+                break;
+            case SDLK_RIGHT:
+                player->set_direction("right");
+                break;
+            default:
+                player->set_direction("static");
+                break;
+            }
+
+            break;
+        case SDL_KEYUP:
+            player->set_direction("static");
+            break;
+        default:
+            break;
+        }
         if (e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
         {
             // Get mouse position
@@ -224,7 +280,8 @@ void Game::handleEvents()
 }
 void Game::Update()
 {
-    //button.Update();
+    life[1]->Update();
+    player->Update();
 }
 
 void Game::Render()
@@ -235,7 +292,8 @@ void Game::Render()
     if (currentScreen == mainscreen)
     {
         mainscreen->Update();
-        enemy_list[0]->Render(); //abhi bhi thora ajeeeb sa hora hai /kya hua?
+        player->Render();
+        enemy_list[0]->Render();
         if (isPolluted)
         {
             for (int i = 0; i < 2; i++)
@@ -256,6 +314,10 @@ void Game::Render()
             life[i]->Render();
         }
         earth->Render();
+        for (int i = 0; i < 2; i++)
+        {
+            ecoFriendly[i]->Render();
+        }
     }
     else
     {
@@ -268,13 +330,25 @@ void Game::Render()
 
 void Game::gameLoop()
 {
+    const int FPS = 60;
+    const int framedelay = 1000 / FPS;
+    Uint32 frameStart;
+    int frameTime;
     currentScreen = startscreen;
     isPolluted = true;
     while (isRunning)
     {
-        Render();
         handleEvents();
+        Update();
+        Render();
         //break;
+        frameStart = SDL_GetTicks();
+        frameTime = SDL_GetTicks() - frameStart;
+
+        if (framedelay > frameTime)
+        {
+            SDL_Delay(framedelay - frameTime);
+        }
     }
 }
 
