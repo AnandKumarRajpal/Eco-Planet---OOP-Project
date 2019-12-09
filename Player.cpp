@@ -35,7 +35,7 @@ Player::Player(SDL_Texture *file) : Character(file)
     player_dest.w = player_src.w;
     player_dest.h = player_src.h;
     player_dest.x = xpos;
-    player_dest.y = 385;
+    player_dest.y = 389;
 
     this->srcRect = player_src;
     this->destRect = player_dest;

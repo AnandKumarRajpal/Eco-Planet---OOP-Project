@@ -9,6 +9,8 @@ class MainScreen;
 class StartScreen;
 class GameOverScreen;
 class PauseScreen;
+class Instructions;
+class IntroScreen;
 class Texture;
 class GameObject;
 class Earth;
@@ -26,6 +28,9 @@ class Game
     StartScreen *startscreen = NULL;
     GameOverScreen *gameoverscreen = NULL;
     PauseScreen *pausescreen = NULL;
+    IntroScreen *introscreen = NULL;
+    Instructions *instructions1 = NULL;
+    Instructions *instructions2 = NULL;
     Life **life = NULL;
     Earth *earth = NULL;
     GameObject **pollutedObj = NULL;
@@ -36,10 +41,14 @@ class Game
     Player *player = NULL;
     GameObject **ecoFriendly = NULL;
     GameObject **nonecoFriendly = NULL;
+    GameObject **powers = NULL;
 
     SDL_Texture *starttex = NULL;
     SDL_Texture *maintex = NULL;
     SDL_Texture *gameovertex = NULL;
+    SDL_Texture *introscreentex = NULL;
+    SDL_Texture *instructions1tex = NULL;
+    SDL_Texture *instructions2tex = NULL;
     SDL_Texture *buttontex = NULL;
     SDL_Texture *pausetex = NULL;
     SDL_Texture *deadTree = NULL;

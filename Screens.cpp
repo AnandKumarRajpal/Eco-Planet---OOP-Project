@@ -21,7 +21,6 @@ void Screens::Render()
     {
         btns[i]->Render(btnTexture);
     }
-
     //std::cout << "Screen rendered" << std::endl;
 }
 void Screens::Render(int x, int y, int width, int height)

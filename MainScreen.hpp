@@ -9,7 +9,7 @@ class MainScreen : public Screens
     int scrollingOffset = 0;
 
 public:
-    MainScreen(SDL_Texture *);
+    MainScreen(SDL_Texture *, SDL_Texture *);
     ~MainScreen();
     void Update();
 

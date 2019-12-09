@@ -4,6 +4,8 @@
 #include "GameOverScreen.hpp"
 #include "PauseScreen.hpp"
 #include "StartScreen.hpp"
+#include "IntroScreen.hpp"
+#include "Instructions.hpp"
 #include "GameObject.hpp"
 #include "Life.hpp"
 #include "Tree.hpp"
@@ -60,15 +62,18 @@ void Game::init()
     startscreen = new StartScreen(starttex, buttontex);
     gameoverscreen = new GameOverScreen(gameovertex, buttontex);
     pausescreen = new PauseScreen(pausetex, buttontex);
-    mainscreen = new MainScreen(maintex);
+    mainscreen = new MainScreen(maintex, buttontex);
+    introscreen = new IntroScreen(introscreentex, buttontex);
+    instructions1 = new Instructions(instructions1tex, buttontex);
+    instructions2 = new Instructions(instructions2tex, buttontex);
     life = new Life *[2];
     life[0] = new Life(objectstex, 10, 10, 550, 10, 0.5, 490, 100); //0.5
     life[1] = new Life(objectstex, 16, 117, 564, 24, 0.5, 437, 46); //change width according to life (changing 437 changed the width)
     //rec = {564, 24, 437, 46};
     earth = new Earth(objectstex, 580, 20, 800, 0, 0.5, 170, 170);
     pollutedObj = new GameObject *[3];
-    pollutedObj[0] = new Tree(deadTree, 0, 0, 250, 350, (1 / 2), 91, 174); //0.5
-    pollutedObj[1] = new Tree(deadTree, 90, 30, 600, 365, (1 / 2), 80, 145);
+    pollutedObj[0] = new Tree(deadTree, 0, 0, 250, 350, 0.5, 91, 174); //0.5
+    pollutedObj[1] = new Tree(deadTree, 90, 30, 600, 365, 0.5, 80, 145);
     //pollutedObj[3] = new Trash(objectstex, );
     //pollutedObj[3] = new Fire(fire, 0, 0, 350, 380, 0.2, 940, 280);    //0.2
     cleanObj = new GameObject *[6];
@@ -90,17 +95,21 @@ void Game::init()
     ecoFriendly[2] = new RandomObj(objectstex, 480, 240, 400, 395, 0.3, 140, 140);
     ecoFriendly[3] = new RandomObj(objectstex, 690, 230, 500, 395, 0.3, 140, 176);
     ecoFriendly[4] = new RandomObj(objectstex, 860, 230, 430, 395, 0.3, 130, 100);
-    // ecoFriendly[5] = new RandomObj(objectstex, 553, 630, );
-    // ecoFriendly[6] = new RandomObj(objectstex, );
-    // ecoFriendly[7] = new RandomObj(objectstex, );
-    // nonecoFriendly[0] = new RandomObj(objectstex, );
-    // nonecoFriendly[1] = new RandomObj(objectstex, );
-    // nonecoFriendly[2] = new RandomObj(objectstex, );
-    // nonecoFriendly[3] = new RandomObj(objectstex, );
-    // nonecoFriendly[4] = new RandomObj(objectstex, );
-    // nonecoFriendly[5] = new RandomObj(objectstex, );
-    // nonecoFriendly[6] = new RandomObj(objectstex, );
-    // nonecoFriendly[7] = new RandomObj(objectstex, );
+    ecoFriendly[5] = new RandomObj(objectstex, 553, 630, , , 0.3, , 180);
+    ecoFriendly[6] = new RandomObj(objectstex, 40, 641, , , 0.3, );
+    ecoFriendly[7] = new RandomObj(objectstex, );
+    nonecoFriendly[0] = new RandomObj(objectstex, );
+    nonecoFriendly[1] = new RandomObj(objectstex, );
+    nonecoFriendly[2] = new RandomObj(objectstex, );
+    nonecoFriendly[3] = new RandomObj(objectstex, );
+    nonecoFriendly[4] = new RandomObj(objectstex, );
+    nonecoFriendly[5] = new RandomObj(objectstex, );
+    nonecoFriendly[6] = new RandomObj(objectstex, );
+    nonecoFriendly[7] = new RandomObj(objectstex, );
+    powers = new Powers *[3];
+    powers[0] = new Powers(objectstex, );
+    powers[1] = new Powers(objectstex, );
+    powers[2] = new Powers(objectstex, );
 }
 
 void Game::LoadMedia()
@@ -175,6 +184,21 @@ void Game::LoadMedia()
     {
         std::cout << "Fossil fuels texture not loaded" << std::endl;
     }
+    introscreentex = Texture::loadTexture("screens/Intro Screen.jpg");
+    if (introscreen == NULL)
+    {
+        std::cout << "Fossil fuels texture not loaded" << std::endl;
+    }
+    instructions1tex = Texture::loadTexture("screens/Instructions.png");
+    if (instructions1 == NULL)
+    {
+        std::cout << "Fossil fuels texture not loaded" << std::endl;
+    }
+    instructions2tex = Texture::loadTexture("screens/Instructions 2.png");
+    if (instructions2 == NULL)
+    {
+        std::cout << "Fossil fuels texture not loaded" << std::endl;
+    }
 }
 
 void Game::handleEvents()
@@ -221,17 +245,46 @@ void Game::handleEvents()
             {
                 if (currentScreen->btns[i]->isOverMouse(x, y))
                 {
-                    if (currentScreen == startscreen)
+                    if (currentScreen == introscreen)
+                    {
+                        if (e.type == SDL_MOUSEBUTTONDOWN)
+                        {
+                            if (i == 0) //next
+                            {
+                                currentScreen = instructions1;
+                            }
+                        }
+                    }
+                    else if (currentScreen == instructions1)
+                    {
+                        if (e.type == SDL_MOUSEBUTTONDOWN)
+                        {
+                            if (i == 0) //next
+                            {
+                                currentScreen = instructions2;
+                            }
+                        }
+                    }
+                    else if (currentScreen == instructions2)
+                    {
+                        if (e.type == SDL_MOUSEBUTTONDOWN)
+                        {
+                            if (i == 0) //next
+                            {
+                                currentScreen = mainscreen;
+                            }
+                        }
+                    }
+                    else if (currentScreen == startscreen)
                     {
                         if (e.type == SDL_MOUSEBUTTONDOWN)
                         {
                             if (i == 0) //startgame
                             {
-                                currentScreen = mainscreen;
+                                currentScreen = introscreen;
                             }
-                            else if (i == 1)
+                            else if (i == 1) //options
                             {
-                                currentScreen = startscreen;
                             }
                             else if (i == 2) //quit
                             {
@@ -248,7 +301,6 @@ void Game::handleEvents()
                             }
                             else if (i == 1) //resume
                             {
-                                //currentScreen = mainscreen;
                             }
                             else if (i == 2) //quit
                             {
@@ -286,14 +338,24 @@ void Game::Update()
 
 void Game::Render()
 {
-    //clear screen
     SDL_RenderClear(renderer);
-    //Render background
     if (currentScreen == mainscreen)
     {
+        life[0]->Render();
         mainscreen->Update();
-
-        enemy_list[0]->Render();
+        if (frameStart == 1000)
+        {
+            enemy_list[0]->Render();
+        }
+        else if (frameStart == 5000)
+        {
+            enemy_list[1]->Render();
+        }
+        else if (frameStart == 10000)
+        {
+            enemy_list[2]->Render();
+        }
+        //enemy_list[0]->Render();
         if (isPolluted)
         {
             for (int i = 0; i < 2; i++)
@@ -309,22 +371,24 @@ void Game::Render()
                 cleanObj[i]->Render();
             }
         }
-        for (int i = 0; i < 2; i++)
-        {
-            life[i]->Render();
-        }
         earth->Render();
-        for (int i = 0; i < 2; i++)
-        {
-            ecoFriendly[i]->Render();
-        }
-        if (frameStart == 5000)
-        {
-            //std::cout << rand() % 8 << std::endl;
-            ecoFriendly[rand() % 8]->Render();
-        }
-
+        // if (frameStart == 1000)
+        // {
+        //     ecoFriendly[rand() % 8]->Render();
+        // }
+        // if (frameStart > 5000)
+        // {
+        //     ecoFriendly[rand() % 8]->Render();
+        // }if (frameStart == 1000)
+        // {
+        //     ecoFriendly[rand() % 8]->Render();
+        // }
+        // if (frameStart > 5000)
+        // {
+        //     ecoFriendly[rand() % 8]->Render();
+        // }
         player->Render();
+        life[1]->Render();
     }
     else
     {
@@ -338,9 +402,9 @@ void Game::gameLoop()
 {
     const int FPS = 60;
     const int framedelay = 1000 / FPS;
-    SDL_HasIntersection(player->player_dest, enemy_list[0]->dstRect)
-    {
-    }
+    // SDL_HasIntersection(player->player_dest, enemy_list[0]->dstRect)
+    // {
+    // }
     int frameTime;
     currentScreen = startscreen;
     isPolluted = true;
@@ -355,8 +419,6 @@ void Game::gameLoop()
 
         if (framedelay > frameTime)
         {
-            // std::cout << frameStart << std::endl;
-            // std::cout << frameTime << std::endl;
             SDL_Delay(framedelay - frameTime);
         }
     }
