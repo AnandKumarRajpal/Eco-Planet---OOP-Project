@@ -80,8 +80,8 @@ void Game::init()
     cleanObj[5] = new Tree(cleantree, 317, 426, 780, 410, 1, 20, 38);
     enemy_list = new Enemies *[3];
     enemy_list[0] = new Deforestation(deforesttex, NULL);
-    enemy_list[1] = new IntensiveFarming(intensivefarmingtex, NULL);
-    enemy_list[2] = new FossilFuel(fossilfueltex, NULL);
+    //enemy_list[1] = new IntensiveFarming(intensivefarmingtex, NULL);
+    //enemy_list[2] = new FossilFuel(fossilfueltex, NULL);
     player = new Player(playertex);
     ecoFriendly = new GameObject *[8];
     nonecoFriendly = new GameObject *[8];
@@ -325,20 +325,25 @@ void Game::Render()
         }
 
         player->Render();
-        if(abs(player->player_dest.x - enemy_list[0]->dstrect.x) < 10)
+
+        if(abs(player->player_dest.x - enemy_list[0]->destRect.x) < 10)
         {
-            enemy_list[0]->srcrect.y = enemy_list[0]->srcrect.h;
-            std::cout << "anand" << abs(player->player_dest.x - enemy_list[0]->dstrect.x) << enemy_list[0]->srcrect.h << std::endl;
+            enemy_list[0]->srcRect.y = enemy_list[0]->srcRect.h;
+            std::cout << "anand" << abs(player->player_dest.x - enemy_list[0]->destRect.x) << "     " << enemy_list[0]->srcRect.h << std::endl;
         }
-        player->Update();
-        std::cout << player->player_dest.x << player->player_dest.y << "askkdksadkjnskdnjsadkjansk" << std::endl;
-        if(!check_collision(player->player_dest, enemy_list[0]->dstrect))
+
+        std::cout << player->destRect.x << "   player x   " << enemy_list[0]->destRect.x << "   enemy x     " << std::endl;
+        if(!check_collision(player->destRect, enemy_list[0]->destRect))
         {
-            //enemy_list[0]->srcrect.y = 285;
-            enemy_list[0]->Render();
+            enemy_list[0]->Render(0);
+        }
+        else
+        {
+            enemy_list[0]->Render(285);
         }
         
-        std::cout << check_collision(player->player_dest, enemy_list[0]->dstrect) << std::endl;
+        
+        std::cout << check_collision(player->destRect, enemy_list[0]->destRect) << std::endl;
         
     }
     else
@@ -354,7 +359,7 @@ void Game::gameLoop()
     const int FPS = 60;
     const int framedelay = 1000 / FPS;
     const SDL_Rect* a = &(player->player_dest);
-    const SDL_Rect* b = &(enemy_list[0]->dstrect);
+    const SDL_Rect* b = &(enemy_list[0]->destRect);
 
     
 
@@ -367,15 +372,15 @@ void Game::gameLoop()
         Update();
         Render();
         //break;
-        // frameStart = SDL_GetTicks();
-        // frameTime = SDL_GetTicks() - frameStart;
+        frameStart = SDL_GetTicks();
+        frameTime = SDL_GetTicks() - frameStart;
 
-        // if (framedelay > frameTime)
-        // {
-        //     // std::cout << frameStart << std::endl;
-        //     // std::cout << frameTime << std::endl;
-        //     SDL_Delay(framedelay - frameTime);
-        // }
+        if (framedelay > frameTime)
+        {
+            // std::cout << frameStart << std::endl;
+            // std::cout << frameTime << std::endl;
+            SDL_Delay(framedelay - frameTime);
+        }
     }
 }
 

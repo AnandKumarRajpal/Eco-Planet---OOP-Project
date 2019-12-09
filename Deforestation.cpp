@@ -12,11 +12,28 @@ void Deforestation::Render()
 {
     Uint32 ticks = SDL_GetTicks();
     int sprite = (ticks / 200) % 20;
-    SDL_Rect srcrect = {sprite * 339, 0, 339, 285};
-    if (ticks % 10 == 0 and dstrect.x > 1)
+    srcRect = {sprite * 339, 0, 339, 285};
+    if (ticks % 10 == 0 and destRect.x > 1)
     {
-        std::cout << dstrect.x << std::endl;
-        dstrect.x -= 5;
+        std::cout << destRect.x << std::endl;
+        destRect.x -= 5;
     }
-    SDL_RenderCopy(Game::renderer, texture, &srcrect, &dstrect);
+    SDL_RenderCopy(Game::renderer, objTexture, &srcRect, &destRect);
 }
+
+void Deforestation::Render(int y)
+{
+    Uint32 ticks = SDL_GetTicks();
+    int sprite = (ticks / 200) % 20;
+    srcRect = {sprite * 339, y, 339, 285};
+    if (ticks % 10 == 0 and destRect.x > 1)
+    {
+        std::cout << destRect.x << std::endl;
+        destRect.x -= 5;
+    }
+    SDL_RenderCopy(Game::renderer, objTexture, &srcRect, &destRect);
+}
+
+
+
+

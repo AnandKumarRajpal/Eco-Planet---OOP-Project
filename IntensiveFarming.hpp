@@ -5,7 +5,8 @@ class IntensiveFarming : public Enemies
 {
 public:
     IntensiveFarming(SDL_Texture *, GameObject *);
-    ~IntensiveFarming();
+    //~IntensiveFarming();
     void Render();
+    void Render(int);
     void LandLord();
 };
