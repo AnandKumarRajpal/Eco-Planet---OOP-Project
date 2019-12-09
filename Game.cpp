@@ -67,8 +67,8 @@ void Game::init()
     //rec = {564, 24, 437, 46};
     earth = new Earth(objectstex, 580, 20, 800, 0, 0.5, 170, 170);
     pollutedObj = new GameObject *[3];
-    pollutedObj[0] = new Tree(deadTree, 0, 0, 250, 350, (1 / 2), 91, 174); //0.5
-    pollutedObj[1] = new Tree(deadTree, 90, 30, 600, 365, (1 / 2), 80, 145);
+    pollutedObj[0] = new Tree(deadTree, 0, 0, 250, 350, 0.5, 91, 174); //0.5
+    pollutedObj[1] = new Tree(deadTree, 90, 30, 600, 365, 0.5, 80, 145);
     //pollutedObj[3] = new Trash(objectstex, );
     //pollutedObj[3] = new Fire(fire, 0, 0, 350, 380, 0.2, 940, 280);    //0.2
     cleanObj = new GameObject *[6];
@@ -293,7 +293,7 @@ void Game::Render()
     {
         mainscreen->Update();
 
-        enemy_list[0]->Render();
+        
         if (isPolluted)
         {
             for (int i = 0; i < 2; i++)
@@ -314,10 +314,10 @@ void Game::Render()
             life[i]->Render();
         }
         earth->Render();
-        for (int i = 0; i < 2; i++)
-        {
-            ecoFriendly[i]->Render();
-        }
+        // for (int i = 0; i < 2; i++)
+        // {
+        //     ecoFriendly[i]->Render();
+        // }
         if (frameStart == 5000)
         {
             //std::cout << rand() % 8 << std::endl;
@@ -325,6 +325,21 @@ void Game::Render()
         }
 
         player->Render();
+        if(abs(player->player_dest.x - enemy_list[0]->dstrect.x) < 10)
+        {
+            enemy_list[0]->srcrect.y = enemy_list[0]->srcrect.h;
+            std::cout << "anand" << abs(player->player_dest.x - enemy_list[0]->dstrect.x) << enemy_list[0]->srcrect.h << std::endl;
+        }
+        player->Update();
+        std::cout << player->player_dest.x << player->player_dest.y << "askkdksadkjnskdnjsadkjansk" << std::endl;
+        if(!check_collision(player->player_dest, enemy_list[0]->dstrect))
+        {
+            //enemy_list[0]->srcrect.y = 285;
+            enemy_list[0]->Render();
+        }
+        
+        std::cout << check_collision(player->player_dest, enemy_list[0]->dstrect) << std::endl;
+        
     }
     else
     {
@@ -338,9 +353,11 @@ void Game::gameLoop()
 {
     const int FPS = 60;
     const int framedelay = 1000 / FPS;
-    SDL_HasIntersection(player->player_dest, enemy_list[0]->dstRect)
-    {
-    }
+    const SDL_Rect* a = &(player->player_dest);
+    const SDL_Rect* b = &(enemy_list[0]->dstrect);
+
+    
+
     int frameTime;
     currentScreen = startscreen;
     isPolluted = true;
@@ -350,15 +367,15 @@ void Game::gameLoop()
         Update();
         Render();
         //break;
-        frameStart = SDL_GetTicks();
-        frameTime = SDL_GetTicks() - frameStart;
+        // frameStart = SDL_GetTicks();
+        // frameTime = SDL_GetTicks() - frameStart;
 
-        if (framedelay > frameTime)
-        {
-            // std::cout << frameStart << std::endl;
-            // std::cout << frameTime << std::endl;
-            SDL_Delay(framedelay - frameTime);
-        }
+        // if (framedelay > frameTime)
+        // {
+        //     // std::cout << frameStart << std::endl;
+        //     // std::cout << frameTime << std::endl;
+        //     SDL_Delay(framedelay - frameTime);
+        // }
     }
 }
 
@@ -394,3 +411,49 @@ Game::~Game()
     delete[] pollutedObj;
     delete[] cleanObj;
 }
+
+
+bool Game::check_collision( SDL_Rect A, SDL_Rect B )
+{
+    //The sides of the rectangles
+    int leftA, leftB;
+    int rightA, rightB;
+    int topA, topB;
+    int bottomA, bottomB;
+
+    //Calculate the sides of rect A
+    leftA = A.x;
+    rightA = A.x + A.w;
+    topA = A.y;
+    bottomA = A.y + A.h;
+        
+    //Calculate the sides of rect B
+    leftB = B.x;
+    rightB = B.x + B.w;
+    topB = B.y;
+    bottomB = B.y + B.h;
+    //If any of the sides from A are outside of B
+    if( bottomA <= topB )
+    {
+        return false;
+    }
+    
+    if( topA >= bottomB )
+    {
+        return false;
+    }
+    
+    if( rightA <= leftB )
+    {
+        return false;
+    }
+    
+    if( leftA >= rightB )
+    {
+        return false;
+    }
+    
+    //If none of the sides from A are outside B
+    return true;
+}
+

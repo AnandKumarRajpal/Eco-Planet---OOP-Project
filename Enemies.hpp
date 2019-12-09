@@ -8,9 +8,8 @@ public:
     GameObject *obj_required_to_kill;
     SDL_Texture *texture = NULL;
     SDL_Rect dstrect = {600, 348, 136, 114};
+    SDL_Rect srcrect;
     // 339, 0, 339, 285
-
-public:
     Enemies();
     Enemies(SDL_Texture *, GameObject *);
     ~Enemies();

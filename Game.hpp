@@ -64,5 +64,6 @@ public:
     void Clean();
     void gameLoop();
     bool running();
+    bool check_collision(SDL_Rect, SDL_Rect);
     static SDL_Renderer *renderer;
 };
