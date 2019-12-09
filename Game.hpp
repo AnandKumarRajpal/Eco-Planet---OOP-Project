@@ -20,6 +20,7 @@ class Game
 {
     SDL_Window *window = NULL;
     bool isPolluted, isRunning;
+    Uint32 frameStart;
 
     MainScreen *mainscreen = NULL;
     StartScreen *startscreen = NULL;

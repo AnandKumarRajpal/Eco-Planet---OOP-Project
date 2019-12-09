@@ -14,7 +14,7 @@ protected:
 public:
     GameObject();
     GameObject(SDL_Texture *);
-    GameObject(SDL_Texture *, int, int, int, int, float, int, int);
+    GameObject(SDL_Texture *, float, float, float, float, float, float, float);
     virtual ~GameObject();
     void SetAlive(bool);
     bool GetAlive();

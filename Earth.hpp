@@ -2,11 +2,11 @@
 
 class Earth : public GameObject
 {
-    int life;
+    float life;
     SDL_Rect srcRect, destRect;
 
 public:
-    Earth(SDL_Texture *, int, int, int, int, int, int, int);
+    Earth(SDL_Texture *, float, float, float, float, float, float, float);
     //virtual ~Earth();
     void Update();
     // void Render();

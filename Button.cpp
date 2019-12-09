@@ -3,7 +3,7 @@
 #include "Game.hpp"
 
 Button::Button() {}
-Button::Button(int xstart, int ystart, int xend, int yend, int w, int h)
+Button::Button(float xstart, float ystart, float xend, float yend, float w, float h)
 {
     position.x = xend;
     position.y = yend;

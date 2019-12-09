@@ -6,7 +6,7 @@ GameObject::GameObject(SDL_Texture *tex)
     objTexture = tex;
     std::cout << "Game Object overloaded constructor called" << std::endl;
 }
-GameObject::GameObject(SDL_Texture *textureSheet, int xstart, int ystart, int xend, int yend, float scale, int w, int h)
+GameObject::GameObject(SDL_Texture *textureSheet, float xstart, float ystart, float xend, float yend, float scale, float w, float h)
 {
     position.x = xend;
     position.y = yend;
@@ -17,8 +17,8 @@ GameObject::GameObject(SDL_Texture *textureSheet, int xstart, int ystart, int xe
     srcRect = {xstart, ystart, w, h};
     destRect.x = xend;
     destRect.y = yend;
-    destRect.w = srcRect.w * 0.5;
-    destRect.h = srcRect.h * 0.5;
+    destRect.w = srcRect.w * scale;
+    destRect.h = srcRect.h * scale;
 
     std::cout << "Game Object second overloaded constructor called" << std::endl;
 }

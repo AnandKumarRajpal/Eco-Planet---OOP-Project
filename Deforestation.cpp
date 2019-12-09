@@ -11,9 +11,9 @@ Deforestation::Deforestation(SDL_Texture *text, GameObject *object)
 void Deforestation::Render()
 {
     Uint32 ticks = SDL_GetTicks();
-    Uint32 sprite = (ticks / 200) % 4;
+    int sprite = (ticks / 200) % 20;
     SDL_Rect srcrect = {sprite * 339, 0, 339, 285};
-    if (ticks % 100 == 0 and dstrect.x > 1)
+    if (ticks % 10 == 0 and dstrect.x > 1)
     {
         std::cout << dstrect.x << std::endl;
         dstrect.x -= 5;

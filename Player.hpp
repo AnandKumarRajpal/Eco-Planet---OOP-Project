@@ -4,7 +4,7 @@
 
 class Player : public Character
 {
-private:
+public:
     int walking_frames;
     int weight;
     int state;

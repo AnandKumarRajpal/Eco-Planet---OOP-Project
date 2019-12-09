@@ -4,10 +4,11 @@
 
 class Enemies
 {
-protected:
+public:
     GameObject *obj_required_to_kill;
     SDL_Texture *texture = NULL;
-    SDL_Rect dstrect = {600, 405, 41, 50};
+    SDL_Rect dstrect = {600, 348, 136, 114};
+    // 339, 0, 339, 285
 
 public:
     Enemies();

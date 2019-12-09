@@ -67,8 +67,8 @@ void Game::init()
     //rec = {564, 24, 437, 46};
     earth = new Earth(objectstex, 580, 20, 800, 0, 0.5, 170, 170);
     pollutedObj = new GameObject *[3];
-    pollutedObj[0] = new Tree(deadTree, 0, 0, 250, 350, 0.5, 91, 174); //0.5
-    pollutedObj[1] = new Tree(deadTree, 90, 30, 600, 365, 0.5, 80, 145);
+    pollutedObj[0] = new Tree(deadTree, 0, 0, 250, 350, (1 / 2), 91, 174); //0.5
+    pollutedObj[1] = new Tree(deadTree, 90, 30, 600, 365, (1 / 2), 80, 145);
     //pollutedObj[3] = new Trash(objectstex, );
     //pollutedObj[3] = new Fire(fire, 0, 0, 350, 380, 0.2, 940, 280);    //0.2
     cleanObj = new GameObject *[6];
@@ -85,12 +85,12 @@ void Game::init()
     player = new Player(playertex);
     ecoFriendly = new GameObject *[8];
     nonecoFriendly = new GameObject *[8];
-    ecoFriendly[0] = new RandomObj(objectstex, 29, 250, 250, 390, 0.5, 200, 150);
-    ecoFriendly[1] = new RandomObj(objectstex, 260, 220, 350, 390, 0.5, 170, 174);
-    // ecoFriendly[2] = new RandomObj(objectstex, );
-    // ecoFriendly[3] = new RandomObj(objectstex, );
-    // ecoFriendly[4] = new RandomObj(objectstex, );
-    // ecoFriendly[5] = new RandomObj(objectstex, );
+    ecoFriendly[0] = new RandomObj(objectstex, 29, 250, 250, 395, 0.3, 200, 150);
+    ecoFriendly[1] = new RandomObj(objectstex, 260, 220, 350, 395, 0.3, 170, 174);
+    ecoFriendly[2] = new RandomObj(objectstex, 480, 240, 400, 395, 0.3, 140, 140);
+    ecoFriendly[3] = new RandomObj(objectstex, 690, 230, 500, 395, 0.3, 140, 176);
+    ecoFriendly[4] = new RandomObj(objectstex, 860, 230, 430, 395, 0.3, 130, 100);
+    // ecoFriendly[5] = new RandomObj(objectstex, 553, 630, );
     // ecoFriendly[6] = new RandomObj(objectstex, );
     // ecoFriendly[7] = new RandomObj(objectstex, );
     // nonecoFriendly[0] = new RandomObj(objectstex, );
@@ -292,7 +292,7 @@ void Game::Render()
     if (currentScreen == mainscreen)
     {
         mainscreen->Update();
-        player->Render();
+
         enemy_list[0]->Render();
         if (isPolluted)
         {
@@ -318,11 +318,17 @@ void Game::Render()
         {
             ecoFriendly[i]->Render();
         }
+        if (frameStart == 5000)
+        {
+            //std::cout << rand() % 8 << std::endl;
+            ecoFriendly[rand() % 8]->Render();
+        }
+
+        player->Render();
     }
     else
     {
         currentScreen->Render();
-        enemy_list[0]->Render();
     }
     //update screen
     SDL_RenderPresent(renderer);
@@ -332,7 +338,9 @@ void Game::gameLoop()
 {
     const int FPS = 60;
     const int framedelay = 1000 / FPS;
-    Uint32 frameStart;
+    SDL_HasIntersection(player->player_dest, enemy_list[0]->dstRect)
+    {
+    }
     int frameTime;
     currentScreen = startscreen;
     isPolluted = true;
@@ -347,6 +355,8 @@ void Game::gameLoop()
 
         if (framedelay > frameTime)
         {
+            // std::cout << frameStart << std::endl;
+            // std::cout << frameTime << std::endl;
             SDL_Delay(framedelay - frameTime);
         }
     }

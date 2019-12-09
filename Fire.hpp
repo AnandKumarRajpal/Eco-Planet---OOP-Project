@@ -2,11 +2,11 @@
 
 class Fire : public GameObject
 {
-    int life;
+    float life;
     SDL_Rect srcRect, destRect;
 
 public:
-    Fire(SDL_Texture *, int, int, int, int, int, int, int);
+    Fire(SDL_Texture *, float, float, float, float, float, float, float);
     //virtual ~Fire();
     void Update();
     // void Render();
