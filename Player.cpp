@@ -14,8 +14,8 @@ Player::Player(SDL_Texture *file) : Character(file)
     //set player frames
     for (int i = 0; i < walking_frames; i++)
     {
-        walking_jump_arr[i].x = 0 + i * 64;
-        walking_jump_arr[i].y = 580;
+        walking_jump_arr[i].x = 5 + i * 64;
+        walking_jump_arr[i].y = 200;
         walking_jump_arr[i].w = 63;
         walking_jump_arr[i].h = 60;
 
@@ -32,10 +32,10 @@ Player::Player(SDL_Texture *file) : Character(file)
 
     player_src = {0, 450, 75, 60};
 
-    player_dest.w = player_src.w;
-    player_dest.h = player_src.h;
+    player_dest.w = player_src.w * 1.5;
+    player_dest.h = player_src.h * 1.5;
     player_dest.x = xpos;
-    player_dest.y = 389;
+    player_dest.y = 365;
 
     this->srcRect = player_src;
     this->destRect = player_dest;
@@ -43,30 +43,18 @@ Player::Player(SDL_Texture *file) : Character(file)
     speed = 3.5;
 }
 
-bool Player::CollisionWithGround()
-{
-    if (yVel > 0)
-    {
-        return true;
-    }
-
-    return false;
-}
-
 void Player::Update()
 {
-
     if (m_direction == "right" and xpos < 730)
     {
         xpos += speed;
         update_dest_rect();
     }
-    if (m_direction == "jump" and xpos < 0)
+    /*if (m_direction == "Jump" and xpos < 730)
     {
-        destRect.y = 440;
+        ypos=330;
         update_dest_rect();
-    }
-
+    }*/
     else if (m_direction == "left" and xpos > 0)
     {
         xpos -= speed;
@@ -90,9 +78,11 @@ void Player::update_dest_rect()
     {
         frame = 0;
     }
-    if (m_direction == "jump")
+    if (m_direction == "Jump")
     {
+
         srcRect = walking_jump_arr[frame / 8];
+        destRect.y = 200;
     }
     if (m_direction == "left")
     {
@@ -104,14 +94,18 @@ void Player::update_dest_rect()
         srcRect = walking_right_arr[frame / 8];
         destRect.x = xpos;
     }
+    else if (m_direction == "original")
+    {
+        srcRect = walking_jump_arr[frame / 8];
+        destRect.y = 365;
+    }
     else
     {
-        srcRect = player_src;
+        srcRect = walking_right_arr[frame / 8];
         destRect.x = xpos;
         //destRect.y = ypos;
     }
 }
-
 Player::~Player()
 {
     //deletion of all objects further

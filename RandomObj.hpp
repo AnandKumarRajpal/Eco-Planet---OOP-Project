@@ -2,10 +2,8 @@
 
 class RandomObj : public GameObject
 {
-    SDL_Rect srcRect, destRect;
-
 public:
-    RandomObj(SDL_Texture *, float, float, float, float, float, float, float);
+    RandomObj(SDL_Texture *, float, float, float, float, float, double, float);
     //virtual ~RandomObj();
     void Update();
     // void Render();

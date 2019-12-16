@@ -9,12 +9,12 @@ protected:
     int height, width;
     SDL_Point position;
     SDL_Texture *objTexture;
-    SDL_Rect srcRect, destRect;
 
 public:
+    SDL_Rect srcRect, destRect;
     GameObject();
     GameObject(SDL_Texture *);
-    GameObject(SDL_Texture *, float, float, float, float, float, float, float);
+    GameObject(SDL_Texture *, float, float, float, float, float, double, float);
     virtual ~GameObject();
     void SetAlive(bool);
     bool GetAlive();

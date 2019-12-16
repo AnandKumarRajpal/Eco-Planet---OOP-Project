@@ -14,7 +14,7 @@ public:
     int totalButtons = 0;
 
     //currentScreen activeScreen;
-    Screens(SDL_Texture *);
+    //Screens(SDL_Texture *);
     Screens(SDL_Texture *, SDL_Texture *);
     virtual ~Screens();
     virtual void Update() = 0;

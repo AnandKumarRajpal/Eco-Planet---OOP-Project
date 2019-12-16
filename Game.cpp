@@ -19,6 +19,7 @@
 #include "Character.hpp"
 #include "Player.hpp"
 #include "RandomObj.hpp"
+#include <time.h>
 
 SDL_Renderer *Game::renderer = nullptr;
 
@@ -62,7 +63,7 @@ void Game::init()
     startscreen = new StartScreen(starttex, buttontex);
     gameoverscreen = new GameOverScreen(gameovertex, buttontex);
     pausescreen = new PauseScreen(pausetex, buttontex);
-    mainscreen = new MainScreen(maintex, buttontex);
+    mainscreen = new MainScreen(maintex, objectstex);
     introscreen = new IntroScreen(introscreentex, buttontex);
     instructions1 = new Instructions(instructions1tex, buttontex);
     instructions2 = new Instructions(instructions2tex, buttontex);
@@ -70,7 +71,7 @@ void Game::init()
     life[0] = new Life(objectstex, 10, 10, 550, 10, 0.5, 490, 100); //0.5
     life[1] = new Life(objectstex, 16, 117, 564, 24, 0.5, 437, 46); //change width according to life (changing 437 changed the width)
     //rec = {564, 24, 437, 46};
-    earth = new Earth(objectstex, 580, 20, 800, 0, 0.5, 170, 170);
+    earth = new Earth(objectstex, 580, 20, 800, 0, 0.4, 170, 170);
     pollutedObj = new GameObject *[3];
     pollutedObj[0] = new Tree(deadTree, 0, 0, 250, 350, 0.5, 91, 174); //0.5
     pollutedObj[1] = new Tree(deadTree, 90, 30, 600, 365, 0.5, 80, 145);
@@ -90,26 +91,26 @@ void Game::init()
     player = new Player(playertex);
     ecoFriendly = new GameObject *[8];
     nonecoFriendly = new GameObject *[8];
-    ecoFriendly[0] = new RandomObj(objectstex, 29, 250, 250, 395, 0.3, 200, 150);
-    ecoFriendly[1] = new RandomObj(objectstex, 260, 220, 350, 395, 0.3, 170, 174);
-    ecoFriendly[2] = new RandomObj(objectstex, 480, 240, 400, 395, 0.3, 140, 140);
-    ecoFriendly[3] = new RandomObj(objectstex, 690, 230, 500, 395, 0.3, 140, 176);
-    ecoFriendly[4] = new RandomObj(objectstex, 860, 230, 430, 395, 0.3, 130, 100);
-    ecoFriendly[5] = new RandomObj(objectstex, 553, 630, , , 0.3, , 180);
-    ecoFriendly[6] = new RandomObj(objectstex, 40, 641, , , 0.3, );
-    ecoFriendly[7] = new RandomObj(objectstex, );
-    nonecoFriendly[0] = new RandomObj(objectstex, );
-    nonecoFriendly[1] = new RandomObj(objectstex, );
-    nonecoFriendly[2] = new RandomObj(objectstex, );
-    nonecoFriendly[3] = new RandomObj(objectstex, );
-    nonecoFriendly[4] = new RandomObj(objectstex, );
-    nonecoFriendly[5] = new RandomObj(objectstex, );
-    nonecoFriendly[6] = new RandomObj(objectstex, );
-    nonecoFriendly[7] = new RandomObj(objectstex, );
-    powers = new Powers *[3];
-    powers[0] = new Powers(objectstex, );
-    powers[1] = new Powers(objectstex, );
-    powers[2] = new Powers(objectstex, );
+    ecoFriendly[0] = new RandomObj(objectstex, 29, 250, 800, 395, 0.3, 200, 150);
+    ecoFriendly[1] = new RandomObj(objectstex, 260, 220, 800, 395, 0.3, 170, 174);
+    ecoFriendly[2] = new RandomObj(objectstex, 480, 240, 800, 395, 0.3, 140, 140);
+    ecoFriendly[3] = new RandomObj(objectstex, 690, 230, 800, 395, 0.3, 140, 176);
+    ecoFriendly[4] = new RandomObj(objectstex, 860, 230, 800, 395, 0.3, 130, 100);
+    // ecoFriendly[5] = new RandomObj(objectstex, 553, 630, , , 0.3, , 180);
+    // ecoFriendly[6] = new RandomObj(objectstex, 40, 641, , , 0.3, );
+    // ecoFriendly[7] = new RandomObj(objectstex, 1304,221,,,0.3,136,175);
+    // nonecoFriendly[0] = new RandomObj(objectstex, );
+    // nonecoFriendly[1] = new RandomObj(objectstex, );
+    // nonecoFriendly[2] = new RandomObj(objectstex, );
+    // nonecoFriendly[3] = new RandomObj(objectstex, );
+    // nonecoFriendly[4] = new RandomObj(objectstex, );
+    // nonecoFriendly[5] = new RandomObj(objectstex, );
+    // nonecoFriendly[6] = new RandomObj(objectstex, );
+    // nonecoFriendly[7] = new RandomObj(objectstex, );
+    // powers = new Powers *[3];
+    // powers[0] = new Powers(objectstex, );
+    // powers[1] = new Powers(objectstex, );
+    // powers[2] = new Powers(objectstex, );
 }
 
 void Game::LoadMedia()
@@ -200,6 +201,49 @@ void Game::LoadMedia()
         std::cout << "Fossil fuels texture not loaded" << std::endl;
     }
 }
+bool Game::check_collision(SDL_Rect A, SDL_Rect B)
+{
+    //The sides of the rectangles
+    int leftA, leftB;
+    int rightA, rightB;
+    int topA, topB;
+    int bottomA, bottomB;
+
+    //Calculate the sides of rect A
+    leftA = A.x;
+    rightA = A.x + A.w;
+    topA = A.y;
+    bottomA = A.y + A.h;
+
+    //Calculate the sides of rect B
+    leftB = B.x;
+    rightB = B.x + B.w;
+    topB = B.y;
+    bottomB = B.y + B.h;
+    //If any of the sides from A are outside of B
+    if (bottomA <= topB)
+    {
+        return false;
+    }
+
+    if (topA >= bottomB)
+    {
+        return false;
+    }
+
+    if (rightA <= leftB)
+    {
+        return false;
+    }
+
+    if (leftA >= rightB)
+    {
+        return false;
+    }
+
+    //If none of the sides from A are outside B
+    return true;
+}
 
 void Game::handleEvents()
 {
@@ -215,8 +259,8 @@ void Game::handleEvents()
 
             switch (e.key.keysym.sym)
             {
-            case SDLK_UP:
-                player->set_direction("UP");
+            case SDLK_SPACE:
+                player->set_direction("Jump");
                 break;
             case SDLK_LEFT:
                 player->set_direction("left");
@@ -228,12 +272,18 @@ void Game::handleEvents()
                 player->set_direction("static");
                 break;
             }
-
             break;
         case SDL_KEYUP:
-            player->set_direction("static");
-            break;
-        default:
+            if (e.key.keysym.sym == SDLK_SPACE)
+            {
+                player->set_direction("original");
+                break;
+            }
+            else
+            {
+                player->set_direction("static");
+                break;
+            }
             break;
         }
         if (e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
@@ -325,6 +375,16 @@ void Game::handleEvents()
                             }
                         }
                     }
+                    else if (currentScreen == mainscreen)
+                    {
+                        if (e.type == SDL_MOUSEBUTTONDOWN)
+                        {
+                            if (i == 0) //pause
+                            {
+                                currentScreen = pausescreen;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -332,72 +392,87 @@ void Game::handleEvents()
 }
 void Game::Update()
 {
-    life[1]->Update();
     player->Update();
 }
 
 void Game::Render()
 {
+    srand(time(0));
     SDL_RenderClear(renderer);
     if (currentScreen == mainscreen)
     {
-        life[0]->Render();
         mainscreen->Update();
-        if (frameStart == 1000)
-        {
-            enemy_list[0]->Render();
-        }
-        else if (frameStart == 5000)
-        {
-            enemy_list[1]->Render();
-        }
-        else if (frameStart == 10000)
-        {
-            enemy_list[2]->Render();
-        }
-        //enemy_list[0]->Render();
+        // if (!check_collision(player->destRect, enemy_list[0]->destRect))
+        // {
+        //     enemy_list[1]->Render();
+        // }
+        // else
+        // {
+        //     enemy_list[1]->Render(285);
+        //}
+        // if (!check_collision(player->destRect, ecoFriendly[0]->destRect))
+        // {
+        //     ecoFriendly[3]->Update();
+        // }
+        // else
+        // {
+        //     ecoFriendly[2]->Update();
+        // }
+
+        // if (frameStart == 40000)
+        // {
+        //     enemy_list[0]->Render();
+        // }
+        // else if (frameStart == 80000)
+        // {
+        //     enemy_list[1]->Render();
+        // }
+        // else if (frameStart == 120000)
+        // {
+        //     enemy_list[2]->Render();
+        // }
         if (isPolluted)
         {
             for (int i = 0; i < 2; i++)
             {
                 //pollutedObj[i]->Update();
-                pollutedObj[i]->Render();
+                pollutedObj[i]->Update();
             }
         }
         else
         {
             for (int i = 0; i < 6; i++)
             {
-                cleanObj[i]->Render();
+                cleanObj[i]->Update();
             }
         }
         earth->Render();
-        // if (frameStart == 1000)
+        // if (frameStart == gap) //gap initialisd to 20000
         // {
-        //     ecoFriendly[rand() % 8]->Render();
+        //ecoFriendly[rand() % 6]->Update();
+        //     gap += 10000;
         // }
-        // if (frameStart > 5000)
+        // if (st == start)
         // {
-        //     ecoFriendly[rand() % 8]->Render();
-        // }if (frameStart == 1000)
-        // {
-        //     ecoFriendly[rand() % 8]->Render();
+        //     for (int i = 0; i < 5; i++)
+        //     {
+        //         ecoFriendly[i]->Render();
+        //     }
         // }
-        // if (frameStart > 5000)
-        // {
-        //     ecoFriendly[rand() % 8]->Render();
-        // }
+        // ecoFriendly[3]->Update();
         player->Render();
-        life[1]->Render();
+        life[0]->Render();
+        life[1]->Update();
+        // enemy_list[1]->Render();
+        // enemy_list[2]->Render();
+        else
+        {
+            currentScreen->Render();
+        }
+        //update screen
+        SDL_RenderPresent(renderer);
     }
-    else
-    {
-        currentScreen->Render();
-    }
-    //update screen
-    SDL_RenderPresent(renderer);
 }
-
 void Game::gameLoop()
 {
     const int FPS = 60;
@@ -407,7 +482,7 @@ void Game::gameLoop()
     // }
     int frameTime;
     currentScreen = startscreen;
-    isPolluted = true;
+    isPolluted = false;
     while (isRunning)
     {
         handleEvents();
@@ -421,6 +496,7 @@ void Game::gameLoop()
         {
             SDL_Delay(framedelay - frameTime);
         }
+        std::cout << frameStart << std::endl;
     }
 }
 
@@ -439,6 +515,9 @@ Game::~Game()
     delete gameoverscreen;
     delete pausescreen;
     delete earth;
+    delete introscreen;
+    delete instructions1;
+    delete instructions2;
 
     for (int i = 0; i < 2; i++)
     {
@@ -452,7 +531,24 @@ Game::~Game()
     {
         delete[] cleanObj[i];
     }
+    for (int i = 0; i < 3; i++)
+    {
+        delete[] enemy_list[i];
+    }
+    // for (int i = 0; i < 8; i++)
+    // {
+    //     delete[] ecoFriendly[i];
+    // }
+    // for (int i = 0; i < 8; i++)
+    // {
+    //     delete[] nonecoFriendly[i];
+    // }
+    // for (int i = 0; i < 3; i++)
+    // {
+    //     delete[] powers[i];
+    // }
     delete[] life;
     delete[] pollutedObj;
     delete[] cleanObj;
+    delete[] enemy_list;
 }

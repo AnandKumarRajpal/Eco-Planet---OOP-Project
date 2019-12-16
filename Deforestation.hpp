@@ -8,7 +8,8 @@ class Deforestation : public Enemies
 
 public:
     Deforestation(SDL_Texture *, GameObject *);
-    ~Deforestation();
+    //~Deforestation();
     void Render();
+    void Render(int);
     void Hatchet();
 };

@@ -6,7 +6,7 @@ class Fire : public GameObject
     SDL_Rect srcRect, destRect;
 
 public:
-    Fire(SDL_Texture *, float, float, float, float, float, float, float);
+    Fire(SDL_Texture *, float, float, float, float, float, double, float);
     //virtual ~Fire();
     void Update();
     // void Render();

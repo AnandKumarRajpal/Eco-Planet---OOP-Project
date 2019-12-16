@@ -2,16 +2,16 @@
 #include "Texture.hpp"
 #include "Game.hpp"
 
-Screens::Screens(SDL_Texture *tex)
-{
-    screenTexture = tex;
-    std::cout << "Screens constructor called" << std::endl;
-}
+// Screens::Screens(SDL_Texture *tex)
+// {
+//     screenTexture = tex;
+//     std::cout << "Screens constructor called" << std::endl;
+// }
 Screens::Screens(SDL_Texture *tex, SDL_Texture *btntex)
 {
     screenTexture = tex;
     btnTexture = btntex;
-    std::cout << "Screens overloaded constructor called" << std::endl;
+    std::cout << "Screens constructor called" << std::endl;
 }
 
 void Screens::Render()
@@ -21,7 +21,7 @@ void Screens::Render()
     {
         btns[i]->Render(btnTexture);
     }
-    //std::cout << "Screen rendered" << std::endl;
+    std::cout << "Screen rendered" << std::endl;
 }
 void Screens::Render(int x, int y, int width, int height)
 {

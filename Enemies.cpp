@@ -8,13 +8,14 @@ Enemies::Enemies()
 }
 Enemies::Enemies(SDL_Texture *tex, GameObject *obj)
 {
-    texture = tex;
+    objTexture = tex;
     obj_required_to_kill = obj;
 }
 Enemies::~Enemies()
 {
     std::cout << "Enemy Destroyed!" << std::endl;
 }
+void Enemies::Update() {}
 
 // virtual void move();
 // virtual bool check_death();

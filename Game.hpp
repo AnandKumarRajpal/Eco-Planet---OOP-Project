@@ -22,7 +22,8 @@ class Game
 {
     SDL_Window *window = NULL;
     bool isPolluted, isRunning;
-    Uint32 frameStart;
+    int frameStart;
+    int gap = 20000;
 
     MainScreen *mainscreen = NULL;
     StartScreen *startscreen = NULL;
@@ -73,5 +74,6 @@ public:
     void Clean();
     void gameLoop();
     bool running();
+    bool check_collision(SDL_Rect, SDL_Rect);
     static SDL_Renderer *renderer;
 };

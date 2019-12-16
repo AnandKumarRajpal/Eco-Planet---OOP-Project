@@ -2,19 +2,18 @@
 #include <SDL.h>
 #include "GameObject.hpp"
 
-class Enemies
+class Enemies : public GameObject
 {
 public:
     GameObject *obj_required_to_kill;
-    SDL_Texture *texture = NULL;
-    SDL_Rect dstrect = {600, 348, 136, 114};
-    // 339, 0, 339, 285
+    SDL_Rect destRect = {600, 348, 136, 114};
 
-public:
     Enemies();
     Enemies(SDL_Texture *, GameObject *);
     ~Enemies();
+    void Update();
     virtual void Render() = 0;
+    virtual void Render(int) = 0;
     // virtual void move();
     // virtual bool check_death();
 };
