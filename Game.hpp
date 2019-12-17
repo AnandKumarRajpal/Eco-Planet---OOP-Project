@@ -11,19 +11,21 @@ class GameOverScreen;
 class PauseScreen;
 class Instructions;
 class IntroScreen;
-class Texture;
 class GameObject;
+class RandomObj;
 class Earth;
 class Life;
 class Enemies;
 class Player;
+class Powers;
+//class Collision;
 
 class Game
 {
     SDL_Window *window = NULL;
     bool isPolluted, isRunning;
     int frameStart;
-    int gap = 20000;
+    int gap = 10000;
 
     MainScreen *mainscreen = NULL;
     StartScreen *startscreen = NULL;
@@ -42,7 +44,11 @@ class Game
     Player *player = NULL;
     GameObject **ecoFriendly = NULL;
     GameObject **nonecoFriendly = NULL;
-    GameObject **powers = NULL;
+    Powers *speedBoast = NULL;
+    Powers *shield = NULL;
+    RandomObj *inventory = NULL;
+    //Collision * collision;
+    GameObject *currentObj = NULL;
 
     SDL_Texture *starttex = NULL;
     SDL_Texture *maintex = NULL;
@@ -61,7 +67,6 @@ class Game
     SDL_Texture *intensivefarmingtex = NULL;
     SDL_Texture *fossilfueltex = NULL;
     SDL_Texture *playertex = NULL;
-    // int scrollingOffset = 0;
 
 public:
     Game(const char *, int, int, int, int, bool);
@@ -74,6 +79,6 @@ public:
     void Clean();
     void gameLoop();
     bool running();
-    bool check_collision(SDL_Rect, SDL_Rect);
     static SDL_Renderer *renderer;
+    bool check_collision(SDL_Rect, SDL_Rect);
 };

@@ -1,28 +1,45 @@
 #pragma once
 #include <iostream>
-#include "Character.hpp"
+#include "GameObject.hpp"
 
-class Player : public Character
+class Player : public GameObject
 {
 public:
-    int walking_frames;
+    SDL_Rect src;
+    SDL_Rect dest;
+    SDL_Rect *left;
+    SDL_Rect *right;
+    SDL_Rect *jump;
+    int walkframes;
     int frame_jump;
-    int weight;
+    int speed;
     int state;
+    std::string direction;
     int frame;
-    SDL_Rect player_src;
-    SDL_Rect player_dest;
-    SDL_Rect *walking_left_arr;
-    SDL_Rect *walking_right_arr;
-    SDL_Rect *walking_jump_arr;
 
 public:
     Player(SDL_Texture *);
     virtual void Update() override;
-    virtual void set_direction(std::string) override;
+    virtual void set_direction(std::string);
     bool CollisionWithGround(float);
     ~Player();
     void setjump();
     void HandleEvents(SDL_Event event);
-    void update_dest_rect();
+    void update_dest();
 };
+
+// class Singleton 
+// { 
+//     private static Singleton obj; 
+  
+//     // private constructor to force use of 
+//     // getInstance() to create Singleton object 
+//     private Singleton() {} 
+  
+//     public static Singleton getInstance() 
+//     { 
+//         if (obj==null) 
+//             obj = new Singleton(); 
+//         return obj; 
+//     } 
+// } 

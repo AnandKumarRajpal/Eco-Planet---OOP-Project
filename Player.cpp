@@ -1,114 +1,110 @@
 #include "Player.hpp"
 
-Player::Player(SDL_Texture *file) : Character(file)
+Player::Player(SDL_Texture *path) : GameObject(path)
 {
-    // x1.x = 250;
-    // x1.y = 130;
-    // x1.h = 70;
-    // x1.w = 60;
-    walking_frames = 8;
-    walking_left_arr = new SDL_Rect[walking_frames];
-    walking_right_arr = new SDL_Rect[walking_frames];
-    walking_jump_arr = new SDL_Rect[walking_frames];
+    path = path;
+    walkframes = 8;
+    jump = new SDL_Rect[walkframes];
+    left = new SDL_Rect[walkframes];
+    right = new SDL_Rect[walkframes];
 
-    //set player frames
-    for (int i = 0; i < walking_frames; i++)
+    //player frames
+    for (int i = 0; i < walkframes; i++)
     {
-        walking_jump_arr[i].x = 5 + i * 64;
-        walking_jump_arr[i].y = 200;
-        walking_jump_arr[i].w = 63;
-        walking_jump_arr[i].h = 60;
+        left[i].x = 0 + i * 64;
+        left[i].y = 580;
+        left[i].w = 63;
+        left[i].h = 60;
 
-        walking_left_arr[i].x = 0 + i * 64;
-        walking_left_arr[i].y = 580;
-        walking_left_arr[i].w = 63;
-        walking_left_arr[i].h = 60;
+        jump[i].x =5  + i * 64;
+        jump[i].y = 200;
+        jump[i].w = 63;
+        jump[i].h = 60;
 
-        walking_right_arr[i].x = 0 + i * 64;
-        walking_right_arr[i].y = 710;
-        walking_right_arr[i].w = 63;
-        walking_right_arr[i].h = 60;
+        right[i].x = 0 + i * 64;
+        right[i].y = 710;
+        right[i].w = 63;
+        right[i].h = 60;
     }
+    src = {0, 450, 75, 60};
+      
+    dest.w = src.w* 1.5;
+    dest.h = src.h* 1.5;
+    dest.x = xpos;
+    dest.y = 365; //385
 
-    player_src = {0, 450, 75, 60};
 
-    player_dest.w = player_src.w * 1.5;
-    player_dest.h = player_src.h * 1.5;
-    player_dest.x = xpos;
-    player_dest.y = 365;
-
-    this->srcRect = player_src;
-    this->destRect = player_dest;
-    m_direction = "static";
+    this->srcRect = src;
+    this->destRect = dest;
+    direction="static";
     speed = 3.5;
 }
 
 void Player::Update()
 {
-    if (m_direction == "right" and xpos < 730)
+    if (direction == "right" and xpos < 900)
     {
         xpos += speed;
-        update_dest_rect();
+        update_dest();
     }
-    /*if (m_direction == "Jump" and xpos < 730)
-    {
-        ypos=330;
-        update_dest_rect();
-    }*/
-    else if (m_direction == "left" and xpos > 0)
+    // if (m_direction == "Jump" and xpos < 900)
+    // {
+    //     ypos=330;
+    //     update_dest_rect();
+    // }
+    else if (direction == "left" and xpos > 0)
     {
         xpos -= speed;
-        update_dest_rect();
+        update_dest();
     }
     else
     {
-        update_dest_rect();
+        update_dest();
     }
 }
 
-void Player::set_direction(std::string dir)
+void Player::set_direction(std::string direct)
 {
-    m_direction = dir;
+    direction =direct;
 }
 
-void Player::update_dest_rect()
+void Player::update_dest()
 {
     frame++;
-    if (frame / 8 >= walking_frames)
+    if (frame / 8 >= walkframes)
     {
         frame = 0;
     }
-    if (m_direction == "Jump")
+    if (direction == "Jump")
     {
-
-        srcRect = walking_jump_arr[frame / 8];
+        srcRect = jump[frame / 8];
         destRect.y = 200;
     }
-    if (m_direction == "left")
+    if (direction == "left")
     {
-        srcRect = walking_left_arr[frame / 8];
+        srcRect = left[frame / 8];
         destRect.x = xpos;
     }
-    else if (m_direction == "right")
+    else if (direction == "right")
     {
-        srcRect = walking_right_arr[frame / 8];
+        srcRect = right[frame / 8];
         destRect.x = xpos;
     }
-    else if (m_direction == "original")
-    {
-        srcRect = walking_jump_arr[frame / 8];
-        destRect.y = 365;
+    else if(direction=="original"){
+        srcRect = jump[frame / 8];
+        destRect.y = 385;
     }
     else
     {
-        srcRect = walking_right_arr[frame / 8];
-        destRect.x = xpos;
-        //destRect.y = ypos;
+        // srcRect = right[frame / 8];
+        // destRect.x = xpos;
     }
 }
+
 Player::~Player()
 {
-    //deletion of all objects further
-    delete walking_right_arr;
-    delete walking_left_arr;
+    delete right;
+    delete left;
+    delete jump;
 }
+

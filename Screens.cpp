@@ -38,3 +38,7 @@ Screens::~Screens()
     }
     delete[] btns;
 }
+void Screens::setColor(int r, int g, int b)
+{
+    SDL_SetTextureColorMod(this->screenTexture, r, g, b);
+}

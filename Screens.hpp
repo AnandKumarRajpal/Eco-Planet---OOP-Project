@@ -20,4 +20,5 @@ public:
     virtual void Update() = 0;
     void Render();
     void Render(int, int, int, int);
+    void setColor(int, int, int);
 };

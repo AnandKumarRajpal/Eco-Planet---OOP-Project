@@ -8,9 +8,5 @@ RandomObj::RandomObj(SDL_Texture *textureSheet, float xstart, float ystart, floa
 void RandomObj::Update()
 {
     this->Render();
-    // if (destRect.x < 0)
-    // {
-    //     destRect.x = 900;
-    // }
     destRect.x = destRect.x - 3;
 }

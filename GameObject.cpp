@@ -11,8 +11,6 @@ GameObject::GameObject(SDL_Texture *textureSheet, float xstart, float ystart, fl
     position.x = xend;
     position.y = yend;
     objTexture = textureSheet;
-    width = w;
-    height = h;
 
     srcRect = {xstart, ystart, w, h};
     destRect.x = xend;

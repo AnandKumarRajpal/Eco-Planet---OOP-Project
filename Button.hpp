@@ -20,5 +20,4 @@ public:
     ~Button();
     void Render(SDL_Texture *);
     bool isOverMouse(int, int);
-    void handleEvents(SDL_Event *);
 };

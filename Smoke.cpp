@@ -5,4 +5,12 @@ Smoke::Smoke(SDL_Texture *textureSheet, float xstart, float ystart, float xend, 
 {
     std::cout << "Smoke constructor called" << std::endl;
 }
-void Smoke::Update() {}
+void Smoke::Update() 
+{
+    this->Render();
+    if (destRect.x < -5)
+    {
+        destRect.x = 900;
+    }
+    destRect.x = destRect.x - 5;
+}

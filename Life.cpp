@@ -7,6 +7,10 @@ Life::Life(SDL_Texture *textureSheet, float xstart, float ystart, float xend, fl
 }
 void Life::Update()
 {
-    destRect.w = destRect.w - 0.0005;
+    Uint32 ticks = SDL_GetTicks();
+    if (ticks % 20 == 0)
+    {
+        destRect.w -= 1;
+    }
     this->Render();
 }
