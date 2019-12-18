@@ -26,4 +26,6 @@ cs224-fall2019-project-eco-planet created by GitHub Classroom
 
 **Number of hours:** 200 hours
 
-**Please add Sprites and Screens zip folder in the folder before running
+**Additional Notes:**
+- --Please add Sprites and Screens zip folder in the folder before running
+- --In case the game does not run, please run the exe life again (./a.exe)
