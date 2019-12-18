@@ -7,6 +7,7 @@ enum buttonNames
 };
 GameOverScreen::GameOverScreen(SDL_Texture *tex, SDL_Texture *buttontex) : Screens(tex, buttontex)
 {
+    //renders buttons on screens
     totalButtons = 2;
     btns = new Button *[2];
     btns[QUIT] = new Button(1250, 7, 500, 380, 620, 190);
@@ -15,5 +16,5 @@ GameOverScreen::GameOverScreen(SDL_Texture *tex, SDL_Texture *buttontex) : Scree
 }
 void GameOverScreen::Update() {}
 GameOverScreen::~GameOverScreen(){
-    
+
 }

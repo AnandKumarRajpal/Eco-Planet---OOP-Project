@@ -1,12 +1,5 @@
 #include "Screens.hpp"
-// class MainScreen;
-// class StartScreen;
-// class GameOverScreen;
-// class PauseScreen;
-// class Instructions;
-// class IntroScreen;
-
-class ScreenFactory
+class ScreenFactory //to implement Abstract factory design pattern
 {
     Screens *scrns;
 

@@ -10,3 +10,5 @@ void RandomObj::Update()
     this->Render();
     destRect.x = destRect.x + 3;
 }
+
+RandomObj::~RandomObj(){}

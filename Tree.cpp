@@ -14,3 +14,5 @@ void Tree::Update()
     }
     destRect.x = destRect.x - 3;
 }
+
+Tree::~Tree(){}

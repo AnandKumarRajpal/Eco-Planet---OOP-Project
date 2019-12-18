@@ -6,3 +6,4 @@ Powers::Powers(SDL_Texture *textureSheet, float xstart, float ystart, float xend
     std::cout << "Powers constructor called" << std::endl;
 }
 void Powers::Update() {}
+Powers::~Powers(){}

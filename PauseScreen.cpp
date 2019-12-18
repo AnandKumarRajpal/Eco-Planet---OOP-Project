@@ -8,6 +8,7 @@ enum buttonNames
 };
 PauseScreen::PauseScreen(SDL_Texture *tex, SDL_Texture *buttontex) : Screens(tex, buttontex)
 {
+    //renders buttons on screens
     totalButtons = 4;
     btns = new Button *[3];
     btns[OPTIONS] = new Button(10, 188, 300, 80, 620, 190);

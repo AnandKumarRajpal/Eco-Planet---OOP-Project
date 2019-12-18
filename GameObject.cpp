@@ -8,6 +8,7 @@ GameObject::GameObject(SDL_Texture *tex)
 }
 GameObject::GameObject(SDL_Texture *textureSheet, float xstart, float ystart, float xend, float yend, float scale, double w, float h)
 {
+    //initializes positions
     position.x = xend;
     position.y = yend;
     objTexture = textureSheet;

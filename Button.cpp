@@ -5,6 +5,7 @@
 Button::Button() {}
 Button::Button(float xstart, float ystart, float xend, float yend, float w, float h)
 {
+    //initializes positions 
     position.x = xend;
     position.y = yend;
 
@@ -24,12 +25,13 @@ Button::Button(float xstart, float ystart, float xend, float yend, float w, floa
     std::cout << "Button created" << std::endl;
 }
 
-void Button::Render(SDL_Texture *objTexture) //, int xstart, int ystart, int xend, int yend)
+void Button::Render(SDL_Texture *objTexture) 
 {
-
+    //renders object
     SDL_RenderCopyEx(Game::renderer, objTexture, &srcRect, &destRect, 0.0, NULL, SDL_FLIP_NONE);
     std::cout << "Button rendered" << std::endl;
 }
+//detects click
 bool Button::isOverMouse(int x, int y)
 {
     //Mouse is left of the button

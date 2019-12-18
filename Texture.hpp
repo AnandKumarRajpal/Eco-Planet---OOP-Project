@@ -10,6 +10,4 @@ class Texture
 {
 public:
     static SDL_Texture *loadTexture(std::string filename);
-    // Texture();
-    // ~Texture();
 };

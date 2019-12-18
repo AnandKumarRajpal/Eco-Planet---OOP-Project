@@ -7,6 +7,7 @@ Life::Life(SDL_Texture *textureSheet, float xstart, float ystart, float xend, fl
 }
 void Life::Update()
 {
+    //reduces life 
     Uint32 ticks = SDL_GetTicks();
     if (ticks % 20 == 0)
     {

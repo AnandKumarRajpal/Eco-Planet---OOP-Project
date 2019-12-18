@@ -284,8 +284,9 @@ void Game::loadGame() //loads game from txt file to start a previously loaded ga
 }
 void Game::reset()
 {
-    // life[1]->destRect = 
-    //reset everything (for play again)
+    life[1]->destRect.w =218;
+    isPolluted=false;
+    enemiesKilled=1;
 }
 void Game::handleEvents()
 {
@@ -428,7 +429,7 @@ void Game::handleEvents()
                             }
                             else if (i == 1) //playagain
                             {
-                                //reset();
+                                reset();
                                 currentScreen = mainscreen;
                             }
                         }
@@ -458,10 +459,12 @@ void Game::Render()
     SDL_RenderClear(renderer);
     if (currentScreen == mainscreen)
     {
+        //gets current time of game since start
         Uint32 ticks=SDL_GetTicks();
         mainscreen->Update();
         if (isPolluted)
         {
+            //renders polluted background
             for (int i = 0; i < 6; i++)
             {
                 pollutedObj[i]->Update();
@@ -470,6 +473,7 @@ void Game::Render()
         }
         else
         {
+            //renders clean background
             for (int i = 0; i < 6; i++)
             {
                 cleanObj[i]->Update();
@@ -479,11 +483,14 @@ void Game::Render()
         earth->Render();
         player->Render();
         life[0]->Render();
+        //updates earths life
         life[1]->Update();
+        //game end condition
         if (life[1]->destRect.w <= 0)
         {
             currentScreen = gameoverscreen;
         }
+        //randomly generates objects to collect throughout game
         if(ticks%200 == 0 && f < 9)
         {
             currentobjs[f] = ecoFriendly[rand()%8];
@@ -508,6 +515,7 @@ void Game::Render()
             std::cout << "added new" << std::endl;
             g++;
         }
+        //detecs collision between player and objects and stores it to inventory of player
         for(int i=0; i < g; i++)
         {
             if ((collision.check_collision(player->destRect, currentobjs[i]->destRect)) == false){
@@ -520,6 +528,7 @@ void Game::Render()
                 currentobjs[i]->destRect.x=10000;
             }
         }
+        //if list size gets greater than total objects, it restores
         if(f > 8)
         {
             f = 0;
@@ -527,6 +536,7 @@ void Game::Render()
         if(g > 9){
             g = 0;
         }
+        //detecs collision between object thrown and enemy
         if (object == true)
         {
             if ((collision.check_collision(enemy_list[0]->destRect, ecoFriendly[0]->destRect)) == false){
@@ -541,6 +551,7 @@ void Game::Render()
                 
             }
         }
+        //enemy attacks
         if (ticks % 5000 && enemyAlive==true) 
         {
             if(enemy_list[0]->attack == false)
