@@ -122,7 +122,7 @@ void Game::init()
     shield = new Powers(objectstex, 1155, 798, 800, 300, 0.2, 238, 246);
 }
 
-void Game::LoadMedia()
+void Game::LoadMedia() //loads all textures needed for game
 {
     playertex = Texture::loadTexture("sprites/playerss.png");
     if (playertex == NULL)
@@ -212,7 +212,7 @@ void Game::LoadMedia()
 
 }
 
-void Game::saveGame()
+void Game::saveGame() //saves game in txt file after enemy is killed
 {
     std::ofstream file;
     file.open("savegame.txt");
@@ -247,7 +247,7 @@ void Game::saveGame()
     file.close();
 }
 
-void Game::loadGame()
+void Game::loadGame() //loads game from txt file to start a previously loaded game
 {
     std::ifstream file("saveGame.txt");
     std::string line;
@@ -284,6 +284,7 @@ void Game::loadGame()
 }
 void Game::reset()
 {
+    // life[1]->destRect = 
     //reset everything (for play again)
 }
 void Game::handleEvents()
@@ -457,17 +458,8 @@ void Game::Render()
     SDL_RenderClear(renderer);
     if (currentScreen == mainscreen)
     {
-        //currentObj = ecoFriendly[0];
+        Uint32 ticks=SDL_GetTicks();
         mainscreen->Update();
-        // if ((collision.check_collision(player->destRect, currentObj->destRect)) == false)
-        // {
-        //     currentObj->Update();
-        // }
-        // else
-        // {
-        //     //add to inventory
-        // }
-        
         if (isPolluted)
         {
             for (int i = 0; i < 6; i++)
@@ -482,6 +474,7 @@ void Game::Render()
             {
                 cleanObj[i]->Update();
             }
+            mainscreen->setColor(85, 85, 85);
         }
         earth->Render();
         player->Render();
@@ -491,46 +484,79 @@ void Game::Render()
         {
             currentScreen = gameoverscreen;
         }
-        int f=0;
-        Uint32 ticks=SDL_GetTicks();
-        if(ticks%100 == 0 and f < 5)
-    {
-        currentobjs[f] = ecoFriendly[rand()%4];
-        std::cout << "added new" << std::endl;
-        f++;
-    }
-
-    for(int i=0; i < f; i++)
-    {
-        currentobjs[i]->Update();
-        std::cout << "rendered stored" << std::endl;
-    }
-
-    if(f > 4)
-    {
-        f = 0;
-    }
+        if(ticks%200 == 0 && f < 9)
+        {
+            currentobjs[f] = ecoFriendly[rand()%8];
+            std::cout << "added new" << std::endl;
+            f++;
+        }
+        for(int i=0; i < f; i++)
+        {
+            if ((collision.check_collision(player->destRect, currentobjs[i]->destRect)) == false){
+                currentobjs[i]->UpdateObj();
+                std::cout << "rendered stored" << std::endl;
+            }
+            else
+            {
+                player->inventory->append(currentobjs[i]);
+                currentobjs[i]->destRect.x=-5;
+            }
+        }
+        if(ticks%500 == 0 && g < 10)
+        {
+            currentobjs[g] = nonecoFriendly[rand()%9];
+            std::cout << "added new" << std::endl;
+            g++;
+        }
+        for(int i=0; i < g; i++)
+        {
+            if ((collision.check_collision(player->destRect, currentobjs[i]->destRect)) == false){
+                currentobjs[i]->UpdateObj();
+                std::cout << "rendered stored" << std::endl;
+            }
+            else
+            {
+                life[1]->destRect.w = life[1]->destRect.w - 30; 
+                currentobjs[i]->destRect.x=-5;
+            }
+        }
+        if(f > 8)
+        {
+            f = 0;
+        }
+        if(g > 9){
+            g = 0;
+        }
         if (object == true)
         {
-            ecoFriendly[0]->Update();
-            /* if ((collision.check_collision(enemy_list[0]->destRect, ecoFriendly[0]->destRect)) == false){
-            ecoFriendly[0]->Update();
-            } */
-        //ecoFriendly[0]->Update();
+            if ((collision.check_collision(enemy_list[0]->destRect, ecoFriendly[0]->destRect)) == false){
+                ecoFriendly[0]->Update();
+            }
+            else
+            {
+                enemiesKilled=1;
+                enemyAlive=false;
+                isPolluted = false;
+                saveGame();
+                
+            }
         }
-        if(ticks%2000 == 0 and enemy_list[0]->attack == false)
+        if (ticks % 5000 && enemyAlive==true) 
         {
-            enemy_list[0]->Render(285);
-            enemy_list[0]->attack = true;
-        }
-        else if(enemy_list[0]->attack)
-        {
-            enemy_list[0]->Render();
-            enemy_list[0]->Hatchet();
-        }
-        else
-        {
-            enemy_list[0]->Render();
+            if(enemy_list[0]->attack == false)
+            {
+                enemy_list[0]->Render(285);
+                enemy_list[0]->attack = true;
+            }
+            else if(enemy_list[0]->attack)
+            {
+                enemy_list[0]->Render();
+                enemy_list[0]->Hatchet();
+            }
+            else
+            {
+                enemy_list[0]->Render();
+            }
         }
     }
     else
@@ -547,7 +573,7 @@ void Game::gameLoop()
     const int framedelay = 1000 / FPS;
     int frameTime;
     currentScreen = startscreen;
-    isPolluted = false;
+    isPolluted = true;
     while (isRunning)
     {
         handleEvents();

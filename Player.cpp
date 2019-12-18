@@ -3,7 +3,7 @@ Player *Player::player = NULL;
 
 Player::Player(SDL_Texture *path) : GameObject(path)
 {
-
+    inventory= new Inventory();
     walkframes = 8;
     jumpframes = 3;
     attackframes = 3;
@@ -46,7 +46,7 @@ Player::Player(SDL_Texture *path) : GameObject(path)
     dest.w = src.w * 1.5;
     dest.h = src.h * 1.5;
     dest.x = xpos;
-    dest.y = 385;
+    dest.y = 368;
 
     this->srcRect = src;
     this->destRect = dest;
@@ -121,7 +121,7 @@ void Player::update_dest()
             if (destRect.y < 10)
             {
                 yVel = 0;
-                destRect.y = 385;
+                destRect.y = 368;
             }
         }
         else
@@ -129,7 +129,7 @@ void Player::update_dest()
             yVel += 1;
         }
         yVel += gravity;
-        if (CollisionWithGround(385)) //replace 500 with wherever your ground is
+        if (CollisionWithGround(368)) //replace 500 with wherever your ground is
         {
             yVel = 0;
             jumping = false;
@@ -139,7 +139,7 @@ void Player::update_dest()
         if (destRect.y < 10)
         {
             yVel = 0;
-            destRect.y = 385;
+            destRect.y = 368;
         }
     }
     else if (direction == "left")
@@ -161,7 +161,7 @@ void Player::update_dest()
     else if (direction == "original")
     {
         srcRect = right[wkframe / 8];
-        destRect.y = 385;
+        destRect.y = 368;
     }
     else
     {
@@ -191,4 +191,5 @@ Player::~Player()
     delete right;
     delete left;
     delete jump;
+    delete inventory;
 }

@@ -17,7 +17,7 @@ class Powers;
 class Game
 {
     SDL_Window *window = NULL;
-    bool isPolluted, isRunning;
+    bool isPolluted, isRunning, enemyAlive=true;
     int frameStart, enemiesKilled;
 
     ScreenFactory factory;
@@ -62,6 +62,7 @@ class Game
     SDL_Texture *playertex = NULL;
     SDL_Texture * attack_tex =NULL;
     bool object = false;
+    int f=0, g=0;
 public:
     Game(const char *, int, int, int, int, bool);
     ~Game();

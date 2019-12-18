@@ -2,17 +2,17 @@
 
 Inventory::Inventory()
 {
-    lst = new RandomObj *[3];
+    lst = new GameObject *[3];
     stored = 0;
 }
 
-void Inventory::append(RandomObj *obj)
+void Inventory::append(GameObject *obj)
 {
     lst[stored] = obj;
     stored++;
 }
 
-RandomObj *Inventory::remove()
+GameObject *Inventory::remove()
 {
     return lst[stored];
     stored--;

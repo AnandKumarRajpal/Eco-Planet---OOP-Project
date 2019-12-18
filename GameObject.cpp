@@ -51,5 +51,9 @@ void GameObject::Render()
     SDL_RenderCopyEx(Game::renderer, objTexture, &srcRect, &destRect, 0.0, NULL, SDL_FLIP_NONE);
     std::cout << "Game Object render called" << std::endl;
 }
-
+void GameObject::UpdateObj()
+{
+    this->Render();
+    destRect.x = destRect.x - 3;
+}
 GameObject::~GameObject() {}

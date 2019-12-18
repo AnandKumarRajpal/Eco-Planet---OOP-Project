@@ -32,8 +32,6 @@ public:
     float gravity = 2;
     bool jumping = false;
     Inventory * inventory=NULL;
-
-public:
     Player(SDL_Texture *);
     static Player *instance();
     virtual void Update() override;

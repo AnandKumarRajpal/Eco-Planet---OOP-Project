@@ -24,4 +24,5 @@ public:
     void SetY(float);
     virtual void Update() = 0;
     virtual void Render();
+    void UpdateObj();
 };

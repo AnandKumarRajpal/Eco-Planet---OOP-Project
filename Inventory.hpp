@@ -7,12 +7,12 @@
 
 class Inventory
 {
-    RandomObj **lst = NULL;
+    GameObject **lst = NULL;
     int stored;
 
 public:
     Inventory();
-    void append(RandomObj *);
-    RandomObj *remove();
+    void append(GameObject *);
+    GameObject *remove();
     ~Inventory();
 };
