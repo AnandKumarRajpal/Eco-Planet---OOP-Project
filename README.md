@@ -9,8 +9,15 @@ cs224-fall2019-project-eco-planet created by GitHub Classroom
 
 **YouTube Channel:** [https://www.youtube.com/channel/UC-CQ2UAKSGgZ5nK6S-mA-rg](https://www.youtube.com/channel/UC-CQ2UAKSGgZ5nK6S-mA-rg?view_as=subscriber)
 
-**Game Description:**
+**Game Description and Controls:**
+- --Eco Planet is a game that aims to teach the player the effects of different things we use in our everyday lives on Earth. At the start of the game, the Earth will be polluted (with smoke and dead trees) and its life will keep decreasing as th game proceeds. When the enemy arrives, as the player kills the enemy by throwing the objects collects, the Earth's life will be restored and the background would become clean with green trees etc. On collection of non eco friendly objects, the Earth's life will decrease. 
+- --Controls: 
+Right Arrow: moves forward
+Left Arrow: moves background
+Arrow Up: jumps
+Space bar: throws object
 
+**Requirements Met:**
 - --Polymorphism: Implemented in Screens, GameObjects and Enemies and classes
 - --Design Patterns: Singleton (for Player class), Abstract Factory (for Screen class) and Template(for GameObjects class)
 - --Menu with buttons: Implemented in Main screen, Game over screen, Instructions screen, Introduction Screen and Pause Screen classes
@@ -30,3 +37,4 @@ cs224-fall2019-project-eco-planet created by GitHub Classroom
 **Additional Notes:**
 - --Please unzip Sprites and Screens zip folder and add to game folder before running
 - --In case the game does not run, please run the exe file again (./a.exe)
+- --Game controls:
