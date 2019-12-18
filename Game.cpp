@@ -499,7 +499,7 @@ void Game::Render()
             else
             {
                 player->inventory->append(currentobjs[i]);
-                currentobjs[i]->destRect.x=-5;
+                currentobjs[i]->destRect.x=10000;
             }
         }
         if(ticks%500 == 0 && g < 10)
@@ -516,8 +516,8 @@ void Game::Render()
             }
             else
             {
-                life[1]->destRect.w = life[1]->destRect.w - 30; 
-                currentobjs[i]->destRect.x=-5;
+                life[1]->destRect.w = life[1]->destRect.w - 50; 
+                currentobjs[i]->destRect.x=10000;
             }
         }
         if(f > 8)

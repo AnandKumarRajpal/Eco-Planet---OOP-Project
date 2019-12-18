@@ -14,3 +14,6 @@ GameOverScreen::GameOverScreen(SDL_Texture *tex, SDL_Texture *buttontex) : Scree
     std::cout << "Game Over Screen constructor called" << std::endl;
 }
 void GameOverScreen::Update() {}
+GameOverScreen::~GameOverScreen(){
+    
+}

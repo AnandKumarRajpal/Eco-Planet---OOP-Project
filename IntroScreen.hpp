@@ -7,7 +7,7 @@ class IntroScreen : public Screens
 {
 public:
     IntroScreen(SDL_Texture *, SDL_Texture *);
-    ~IntroScreen();
+    virtual ~IntroScreen();
     void Update();
     //void Render();
 };

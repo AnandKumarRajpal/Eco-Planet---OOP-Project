@@ -14,3 +14,4 @@ void Smoke::Update()
     }
     destRect.x = destRect.x - 5;
 }
+Smoke::~Smoke(){}

@@ -14,6 +14,7 @@ Enemies::Enemies(SDL_Texture *tex, SDL_Texture *attack, GameObject *obj)
 }
 Enemies::~Enemies()
 {
+    delete obj_required_to_kill;
     std::cout << "Enemy Destroyed!" << std::endl;
 }
 void Enemies::Update() {}

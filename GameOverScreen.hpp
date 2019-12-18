@@ -7,7 +7,7 @@ class GameOverScreen : public Screens
 {
 public:
     GameOverScreen(SDL_Texture *, SDL_Texture *);
-    //~GameOverScreen();
+    virtual ~GameOverScreen();
     void Update();
     //void Render();
 };

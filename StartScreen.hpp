@@ -7,7 +7,6 @@ class StartScreen : public Screens
 {
 public:
     StartScreen(SDL_Texture *, SDL_Texture *);
-    ~StartScreen();
+    virtual ~StartScreen();
     void Update();
-    //void Render();
 };

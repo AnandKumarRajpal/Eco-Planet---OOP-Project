@@ -52,3 +52,4 @@ void Deforestation::Hatchet()
     }
     SDL_RenderCopy(Game::renderer, attack_tex, &srcrect_attack, &dstrect_attack);
 }
+Deforestation::~Deforestation(){}

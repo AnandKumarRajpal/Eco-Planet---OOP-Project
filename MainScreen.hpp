@@ -9,6 +9,6 @@ class MainScreen : public Screens
 
 public:
     MainScreen(SDL_Texture *, SDL_Texture *);
-    ~MainScreen();
+    virtual ~MainScreen();
     void Update();
 };

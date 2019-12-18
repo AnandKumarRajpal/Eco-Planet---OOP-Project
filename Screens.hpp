@@ -17,5 +17,5 @@ public:
     void Render();
     void Render(int, int, int, int);
     void setColor(int, int, int);
-    virtual ~Screens();
+    ~Screens();
 };

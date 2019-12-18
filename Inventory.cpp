@@ -18,4 +18,11 @@ GameObject *Inventory::remove()
     stored--;
 }
 
-Inventory::~Inventory() {}
+Inventory::~Inventory() 
+{
+    for (int i = 0; i < 3; i++)
+    {
+        delete[] lst[i];
+    }
+    delete [] lst;
+}

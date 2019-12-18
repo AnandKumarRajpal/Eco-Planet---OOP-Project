@@ -4,13 +4,11 @@
 
 class Deforestation : public Enemies
 {
-    public:
-        GameObject *obj_required_to_kill;
-        
-
-        Deforestation(SDL_Texture *, SDL_Texture *, GameObject *);
-        //~Deforestation();
-        void Render();
-        void Render(int);
-        void Hatchet();
+public:
+    GameObject *obj_required_to_kill;
+    Deforestation(SDL_Texture *, SDL_Texture *, GameObject *);
+    virtual ~Deforestation();
+    void Render();
+    void Render(int);
+    void Hatchet();
 };

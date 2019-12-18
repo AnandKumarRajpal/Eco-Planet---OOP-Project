@@ -14,7 +14,7 @@ class Enemies : public GameObject
         bool attack = false;
         Enemies();
         Enemies(SDL_Texture *, SDL_Texture *, GameObject *);
-        ~Enemies();
+        virtual ~Enemies();
         void Update();
         virtual void Render() = 0;
         virtual void Render(int) = 0;
