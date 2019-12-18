@@ -38,10 +38,6 @@ float GameObject::GetY() const
 {
     return ypos;
 }
-void GameObject::SetX(float x)
-{
-    xpos = x;
-}
 void GameObject::SetY(float y)
 {
     ypos = y;
@@ -55,5 +51,9 @@ void GameObject::UpdateObj()
 {
     this->Render();
     destRect.x = destRect.x - 3;
+}
+void GameObject::operator=(float other)
+{
+    this->ypos = other;
 }
 GameObject::~GameObject() {}

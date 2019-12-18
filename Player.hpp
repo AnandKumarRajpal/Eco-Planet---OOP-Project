@@ -7,7 +7,7 @@ class Player : public GameObject
 {
 private:
     static Player *player;
-    Player(){};
+     Player(SDL_Texture *);
 
 public:
     SDL_Rect src;
@@ -22,23 +22,15 @@ public:
     int jumpframes;
     int attackframes;
     int speed;
-    int state;
     std::string direction;
     int wkframe;
     int jkframe;
     int akframe;
-    int groundYPos;
-    float yVel = 0;
-    float gravity = 2;
-    bool jumping = false;
     Inventory * inventory=NULL;
-    Player(SDL_Texture *);
-    static Player *instance();
+    static Player *instance(SDL_Texture*);
     virtual void Update() override;
     virtual void set_direction(std::string);
     ~Player();
-    bool CollisionWithGround(int);
     void HandleEvents(SDL_Event event);
     void update_dest();
-    void check();
 };

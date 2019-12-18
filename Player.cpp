@@ -1,18 +1,17 @@
 #include "Player.hpp"
 Player *Player::player = NULL;
-
 Player::Player(SDL_Texture *path) : GameObject(path)
 {
     inventory= new Inventory();
     walkframes = 8;
-    jumpframes = 3;
+    jumpframes = 7;
     attackframes = 3;
     attack = new SDL_Rect[attackframes];
     jump = new SDL_Rect[jumpframes];
     left = new SDL_Rect[walkframes];
     right = new SDL_Rect[walkframes];
 
-    //player frames
+    //player frames for animations
     for (int i = 0; i < walkframes; i++)
     {
         left[i].x = 0 + i * 64;
@@ -28,7 +27,7 @@ Player::Player(SDL_Texture *path) : GameObject(path)
     for (int i = 0; i < jumpframes; i++)
     {
 
-        jump[i].x = 260 + i * 64;
+        jump[i].x = 0 + i * 64;
         jump[i].y = 1870;
         jump[i].w = 63;
         jump[i].h = 60;
@@ -53,7 +52,7 @@ Player::Player(SDL_Texture *path) : GameObject(path)
     direction = "walk_fixed";
     speed = 5;
 }
-
+//increasing the xpos or ypos depending upon the key pressed
 void Player::Update()
 {
     if (direction == "right" and xpos < 900)
@@ -80,19 +79,20 @@ void Player::Update()
         update_dest();
     }
 }
-
+//set the direction according to the key pressed
 void Player::set_direction(std::string direct)
 {
     direction = direct;
 }
-
-Player *Player::instance()
+//singleton class implemented here
+// a pointer to this class will be used in all other classes.
+Player *Player::instance(SDL_Texture *path)
 {
     if (!player)
-        player = new Player();
+        player = new Player(path);
     return player;
 }
-
+//updates the xpos and ypos of the player according to the key pressed
 void Player::update_dest()
 {
     wkframe++;
@@ -102,7 +102,7 @@ void Player::update_dest()
     {
         wkframe = 0;
     }
-    if (jkframe / 3 >= jumpframes)
+    if (jkframe / 7 >= jumpframes)
     {
         jkframe = 0;
     }
@@ -112,35 +112,9 @@ void Player::update_dest()
     }
     if (direction == "Jump")
     {
-        srcRect = jump[jkframe / 3];
+        srcRect = jump[jkframe / 7];
         //destRect.y = 330;
-        if (jumping)
-        {
-            destRect.y -= yVel;
-            yVel -= gravity;
-            if (destRect.y < 10)
-            {
-                yVel = 0;
-                destRect.y = 368;
-            }
-        }
-        else
-        {
-            yVel += 1;
-        }
-        yVel += gravity;
-        if (CollisionWithGround(368)) //replace 500 with wherever your ground is
-        {
-            yVel = 0;
-            jumping = false;
-        }
-
-        destRect.y += yVel;
-        if (destRect.y < 10)
-        {
-            yVel = 0;
-            destRect.y = 368;
-        }
+        destRect.y = destRect.y - 10;
     }
     else if (direction == "left")
     {
@@ -173,21 +147,13 @@ void Player::update_dest()
         {
             srcRect = right[wkframe / 8];
             destRect.x = xpos;
-            std::cout << destRect.x << std::endl;
         }
     }
 }
-bool Player::CollisionWithGround(int groundYPos)
-{
-    int y = destRect.y + yVel;
-    return y >= groundYPos;
-}
-void Player::check()
-{
-}
-
+//destructor 
 Player::~Player()
 {
+
     delete right;
     delete left;
     delete jump;

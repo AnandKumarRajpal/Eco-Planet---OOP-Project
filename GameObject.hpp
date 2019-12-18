@@ -20,8 +20,8 @@ public:
     int GetHeight() const;
     float GetX() const;
     float GetY() const;
-    void SetX(float);
     void SetY(float);
+    void operator=(float other);
     virtual void Update() = 0;
     virtual void Render();
     void UpdateObj();

@@ -61,6 +61,7 @@ class Game
     SDL_Texture *fossilfueltex = NULL;
     SDL_Texture *playertex = NULL;
     SDL_Texture * attack_tex =NULL;
+    Player *player=NULL;
     bool object = false;
     int f=0, g=0;
 public:

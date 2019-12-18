@@ -18,7 +18,6 @@
 #include <time.h>
 
 SDL_Renderer *Game::renderer = nullptr;
-Player *player = Player::instance();
 
 bool Game::running()
 {
@@ -95,7 +94,7 @@ void Game::init()
     enemy_list[0] = new Deforestation(deforesttex,attack_tex, NULL);
    /*  enemy_list[1] = new IntensiveFarming(intensivefarmingtex, NULL);
     enemy_list[2] = new FossilFuel(fossilfueltex, NULL); */
-    player = new Player(playertex);
+    player = Player::instance(playertex);
     //creating list of objects to be collected by player
     ecoFriendly = new GameObject *[9];
     //creating list of objects not to be collected by player
@@ -260,22 +259,22 @@ void Game::loadGame() //loads game from txt file to start a previously loaded ga
         if (line.c_str() == "True")
         {
             isPolluted = true;
-            pollutedObj[0]->SetX(atoi(line.c_str()));
-            pollutedObj[1]->SetX(atoi(line.c_str()));
-            pollutedObj[2]->SetX(atoi(line.c_str()));
-            pollutedObj[3]->SetX(atoi(line.c_str()));
-            pollutedObj[4]->SetX(atoi(line.c_str()));
-            pollutedObj[5]->SetX(atoi(line.c_str()));
+             pollutedObj[0]->destRect.x = atoi(line.c_str());
+            pollutedObj[1]->destRect.x = (atoi(line.c_str()));
+            pollutedObj[2]->destRect.x = (atoi(line.c_str()));
+            pollutedObj[3]->destRect.x = (atoi(line.c_str()));
+            pollutedObj[4]->destRect.x = (atoi(line.c_str()));
+            pollutedObj[5]->destRect.x = (atoi(line.c_str()));
         }
         else if (line.c_str() == "False")
         {
             isPolluted = false;
-            cleanObj[0]->SetX(atoi(line.c_str()));
-            cleanObj[1]->SetX(atoi(line.c_str()));
-            cleanObj[2]->SetX(atoi(line.c_str()));
-            cleanObj[3]->SetX(atoi(line.c_str()));
-            cleanObj[4]->SetX(atoi(line.c_str()));
-            cleanObj[5]->SetX(atoi(line.c_str()));
+              cleanObj[0]->destRect.x = (atoi(line.c_str()));
+            cleanObj[1]->destRect.x = (atoi(line.c_str()));
+            cleanObj[2]->destRect.x = (atoi(line.c_str()));
+            cleanObj[3]->destRect.x = (atoi(line.c_str()));
+            cleanObj[4]->destRect.x = (atoi(line.c_str()));
+            cleanObj[5]->destRect.x = (atoi(line.c_str()));
         }
         enemiesKilled = atoi(line.c_str());
         file.close();
@@ -298,18 +297,16 @@ void Game::handleEvents()
         case SDL_QUIT:
             isRunning = false;
             break;
+        // player movement depending upon the keys pressed
         case SDL_KEYDOWN:
 
             switch (e.key.keysym.sym)
             {
             case SDLK_UP:
-                if (player->jumping == false)
-                {
-                    player->jumping = true;
-                    player->yVel -= 10;
-                    player->set_direction("Jump");
-                    player->jumping = false;
-                }
+                
+                player->set_direction("Jump");
+                
+                
                 break;
             case SDLK_LEFT:
                 player->set_direction("left");
@@ -318,6 +315,7 @@ void Game::handleEvents()
                 player->set_direction("right");
                 break;
             case SDLK_SPACE:
+            //initializing the objects destRect according to players position
                 ecoFriendly[0]->destRect.x = player->destRect.x + 73;
                 ecoFriendly[0]->destRect.y = player->destRect.y + 25;
                 ecoFriendly[0]->destRect.w = player->destRect.w * 0.3;
@@ -536,7 +534,7 @@ void Game::Render()
         if(g > 9){
             g = 0;
         }
-        //detecs collision between object thrown and enemy
+        //if attack key is pressed then render the object on the screen
         if (object == true)
         {
             if ((collision.check_collision(enemy_list[0]->destRect, ecoFriendly[0]->destRect)) == false){
