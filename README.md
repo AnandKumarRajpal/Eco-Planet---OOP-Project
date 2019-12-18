@@ -28,4 +28,4 @@ cs224-fall2019-project-eco-planet created by GitHub Classroom
 
 **Additional Notes:**
 - --Please add Sprites and Screens zip folder in the folder before running
-- --In case the game does not run, please run the exe life again (./a.exe)
+- --In case the game does not run, please run the exe file again (./a.exe)
