@@ -11,7 +11,7 @@ cs224-fall2019-project-eco-planet created by GitHub Classroom
 **Game Description:**
 
 - --Polymorphism: Implemented in Screens, GameObjects and Enemies and classes
-- --Design Patterns: Singleton, Abstract Factory Method and Template
+- --Design Patterns: Singleton (for Player class), Abstract Factory (for Screen class) and Template(for GameObjects class)
 - --Menu with buttons: Implemented in Main screen, Game over screen, Instructions screen, Introduction Screen and Pause Screen classes
 - --File I/O: Used to Save and Load game (savegame.txt attached)
 - --Operator Overloading: SetX() and SetY() functions of GameObject class
