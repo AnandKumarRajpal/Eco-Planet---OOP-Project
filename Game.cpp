@@ -60,7 +60,7 @@ void Game::init()
     startscreen = factory.CreateScreen("startscreen", starttex, buttontex);
     gameoverscreen = factory.CreateScreen("gameoverscreen", gameovertex, buttontex);
     pausescreen = factory.CreateScreen("pausescreen", pausetex, buttontex);
-    mainscreen = factory.CreateScreen("mainscreen", maintex, buttontex);
+    mainscreen = factory.CreateScreen("mainscreen", maintex, playertex);
     introscreen = factory.CreateScreen("introscreen", introscreentex, buttontex);
     instructions1 = factory.CreateScreen("instructionsscreen", instructions1tex, buttontex);
     instructions2 = factory.CreateScreen("instructionsscreen", instructions2tex, buttontex);
@@ -220,7 +220,7 @@ void Game::saveGame() //saves game in txt file after enemy is killed
     file << player->destRect.y << "\n";
     if (isPolluted)
     {
-        file << "True"
+        file << "true"
              << "\n";
         file << pollutedObj[0]->GetX() << "\n";
         file << pollutedObj[1]->GetX() << "\n";
@@ -231,7 +231,7 @@ void Game::saveGame() //saves game in txt file after enemy is killed
     }
     else
     {
-        file << "False"
+        file << "false"
              << "\n";
         file << cleanObj[0]->GetX() << "\n";
         file << cleanObj[1]->GetX() << "\n";
@@ -248,15 +248,15 @@ void Game::saveGame() //saves game in txt file after enemy is killed
 
 void Game::loadGame() //loads game from txt file to start a previously loaded game
 {
-    std::ifstream file("saveGame.txt");
+    std::ifstream file("savegame.txt");
     std::string line;
     if (file.is_open())
     {
         getline(file, line);
-        life[1]->lifeValue = atoi(line.c_str());
+        life[1]->destRect.w = atoi(line.c_str());
         player->destRect.x = atoi(line.c_str());
         player->destRect.y = atoi(line.c_str());
-        if (line.c_str() == "True")
+        if (line.c_str() == "true")
         {
             isPolluted = true;
              pollutedObj[0]->destRect.x = atoi(line.c_str());
@@ -266,7 +266,7 @@ void Game::loadGame() //loads game from txt file to start a previously loaded ga
             pollutedObj[4]->destRect.x = (atoi(line.c_str()));
             pollutedObj[5]->destRect.x = (atoi(line.c_str()));
         }
-        else if (line.c_str() == "False")
+        else if (line.c_str() == "false")
         {
             isPolluted = false;
               cleanObj[0]->destRect.x = (atoi(line.c_str()));
@@ -278,14 +278,14 @@ void Game::loadGame() //loads game from txt file to start a previously loaded ga
         }
         enemiesKilled = atoi(line.c_str());
         file.close();
-        currentScreen = mainscreen;
     }
+    currentScreen = mainscreen;
 }
 void Game::reset()
 {
     life[1]->destRect.w =218;
-    isPolluted=false;
-    enemiesKilled=1;
+    isPolluted=true;
+    enemiesKilled=0;
 }
 void Game::handleEvents()
 {
@@ -390,6 +390,7 @@ void Game::handleEvents()
                             }
                             else if (i == 1) //loadgame
                             {
+                                isPolluted=false;
                                 loadGame();
                             }
                             else if (i == 2) //quit
@@ -550,7 +551,7 @@ void Game::Render()
             }
         }
         //enemy attacks
-        if (ticks % 5000 && enemyAlive==true) 
+        if (ticks % 5000 && enemyAlive==true && enemiesKilled <1)
         {
             if(enemy_list[0]->attack == false)
             {
