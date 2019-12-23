@@ -36,5 +36,5 @@ Space bar: throws object
 
 **Additional Notes:**
 - --Please unzip Sprites and Screens zip folder and add to game folder before running
-- --In case the game does not run, please run the exe file again (./a.exe)
-- --For some reason, the pause button is not being displayed on the top left corner of game screen, however if you click it, pause screen will appear.
+- --In case the game does not run, please run the exe file again (./a.exe).
+- --On the start screen, the 'QUIT' button loads the game insetad of the 'LOAD' button
