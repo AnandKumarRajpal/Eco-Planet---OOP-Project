@@ -40,7 +40,7 @@ bool Button::isOverMouse(int x, int y)
         return false;
     }
     //Mouse is right of the button
-    else if (x > position.x + width)
+    else if (x > position.x + destRect.w)
     {
         return false;
     }
@@ -50,7 +50,7 @@ bool Button::isOverMouse(int x, int y)
         return false;
     }
     //Mouse below the button
-    else if (y > position.y + height)
+    else if (y > position.y + destRect.h)
     {
         return false;
     }
