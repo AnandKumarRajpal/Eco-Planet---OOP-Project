@@ -1,5 +1,4 @@
-# cs224-fall2019-project-eco-planet
-cs224-fall2019-project-eco-planet created by GitHub Classroom
+# CS 224 - Object Oriented Programming - Group Project
 
 **Title:** Eco Planet
 
@@ -10,8 +9,8 @@ cs224-fall2019-project-eco-planet created by GitHub Classroom
 **YouTube Channel:** [https://www.youtube.com/channel/UC-CQ2UAKSGgZ5nK6S-mA-rg](https://www.youtube.com/channel/UC-CQ2UAKSGgZ5nK6S-mA-rg?view_as=subscriber)
 
 **Game Description and Controls:**
-- --Eco Planet is a game that aims to teach the player the effects of different things we use in our everyday lives on Earth. At the start of the game, the Earth will be polluted (with smoke and dead trees) and its life will keep decreasing as th game proceeds. When the enemy arrives, as the player kills the enemy by throwing the objects collects, the Earth's life will be restored and the background would become clean with green trees etc. On collection of non eco friendly objects, the Earth's life will decrease. 
-- --Controls: 
+- Eco Planet is a game that aims to teach the player the effects of different things we use in our everyday lives on Earth. At the start of the game, the Earth will be polluted (with smoke and dead trees) and its life will keep decreasing as th game proceeds. When the enemy arrives, as the player kills the enemy by throwing the objects collects, the Earth's life will be restored and the background would become clean with green trees etc. On collection of non eco friendly objects, the Earth's life will decrease. 
+- Controls: 
 Right Arrow: moves forward
 Left Arrow: moves background
 Arrow Up: jumps
